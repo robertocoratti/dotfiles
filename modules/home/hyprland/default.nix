@@ -38,6 +38,11 @@ in {
           ]
           ++ lib.optionals waybarEnabled ["waybar"];
 
+        monitor = [
+          "HDMI-A-1, 2560x1440@240, 1920x0, 1, bitdepth, 10, cm, hdr"
+          "DP-1, 1920x1080@75, 0x180, 1"
+        ];
+
         general = {
           border_size = 0;
           allow_tearing = false;
