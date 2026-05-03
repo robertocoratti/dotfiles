@@ -21,16 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ags.url = "github:Aylur/ags";
-
-    LazyVim = {
-      url = "github:matadaniel/LazyVim-module";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    mithril-shell.url = "github:andreashgk/mithril-shell";
-
-    
   };
 
   outputs = {

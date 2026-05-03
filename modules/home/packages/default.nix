@@ -20,6 +20,8 @@ in {
       obsidian
       spotify
       onlyoffice-desktopeditors
+      mpv
+      yt-dlp
     ];
 
     programs = {

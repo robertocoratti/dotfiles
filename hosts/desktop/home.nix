@@ -20,7 +20,6 @@
     icons.enable = true;
     kitty.enable = true;
     packages.enable = true;
-    themes.enable = true;
     vscode.enable = true;
   };
 

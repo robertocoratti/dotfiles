@@ -15,12 +15,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.config.programs = {
-      hyprland = {
-        enable = true;
-      };
-    };
-
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
@@ -46,6 +40,7 @@ in {
         general = {
           border_size = 0;
           allow_tearing = false;
+          layout = "dwindle";
 
           gaps_in = 8;
           gaps_out = 16;
@@ -64,6 +59,7 @@ in {
 
         decoration = {
           rounding = 16;
+          rounding_power = 2;
 
           #active_opacity = 0.75;
           #inactive_opacity = 0.75;
@@ -72,7 +68,7 @@ in {
             enabled = true;
             size = 20;
             passes = 3;
-            ignore_opacity = false;
+            ignore_opacity = true;
             noise = 0.01;
             contrast = 0.9;
             brightness = 0.6;
@@ -83,14 +79,30 @@ in {
         };
 
         layerrule = [
-          "blur, waybar"
-          "blurpopups, waybar"
-          "blur, launcher"
-          "blurpopups, launcher"
-          "blur, bar0"
-          "blurpopups, bar0"
-          "blur, bar1"
-          "blurpopups, bar1"
+          {
+            name = "blur-waybar";
+            "match:namespace" = "waybar";
+            blur = true;
+            blur_popups = true;
+          }
+          {
+            name = "blur-launcher";
+            "match:namespace" = "launcher";
+            blur = true;
+            blur_popups = true;
+          }
+          {
+            name = "blur-bar0";
+            "match:namespace" = "bar0";
+            blur = true;
+            blur_popups = true;
+          }
+          {
+            name = "blur-bar1";
+            "match:namespace" = "bar1";
+            blur = true;
+            blur_popups = true;
+          }
         ];
 
         animations = {
@@ -166,8 +178,16 @@ in {
           );
 
         windowrule = [
-          "suppressevent maximize, class:.*"
-          "tile, class:Brave-browser"
+          {
+            name = "suppress-maximize-events";
+            "match:class" = ".*";
+            suppress_event = "maximize";
+          }
+          {
+            name = "tile-brave";
+            "match:class" = "Brave-browser";
+            tile = true;
+          }
         ];
       };
     };
