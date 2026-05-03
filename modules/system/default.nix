@@ -122,5 +122,10 @@
     gvfs.enable = true;
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
   system.stateVersion = "23.11";
 }

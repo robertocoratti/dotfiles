@@ -29,6 +29,8 @@
     };
 
     mithril-shell.url = "github:andreashgk/mithril-shell";
+
+    
   };
 
   outputs = {
