@@ -18,8 +18,8 @@ in {
       polarity = "dark";
 
       image = pkgs.fetchurl {
-        url = "https://upload.wikimedia.org/wikipedia/commons/2/22/New_York_City_at_night_HDR.jpg";
-        hash = "sha256-J2Y007Y1zD4is6CWaD9MMeyy2YLrTNnawcP6yC8lk+U=";
+        url = "https://w.wallhaven.cc/full/og/wallhaven-oglrv9.jpg";
+        hash = "sha256-GXyBfPHxJWn/e3kVKkgRHXigRd4m3yCBV06COv61l9Q=";
       };
 
       base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
