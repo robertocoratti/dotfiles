@@ -6,6 +6,7 @@
   ...
 }: {
   imports = [
+    ./claude-code
     ./fuzzel
     ./git
     ./helix
@@ -13,9 +14,13 @@
     ./hyprpanel
     ./icons
     ./kitty
+    ./lock
     ./packages
+    ./screenshot
+    ./shell
     ./vscode
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.chromium.enableWideVine = true;
 }

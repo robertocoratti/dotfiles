@@ -15,8 +15,13 @@ in {
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      userName = "Roberto Coratti";
-      userEmail = "corattiroberto@gmail.com";
+      settings = {
+        user = {
+          name = "Roberto Coratti";
+          email = "corattiroberto@gmail.com";
+        };
+      };
+      signing.format = null;
     };
   };
 }

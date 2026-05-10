@@ -12,16 +12,35 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      eza
-      fastfetch
-      nautilus
+      # apps
       brave
+      chromium
       vesktop
       obsidian
       spotify
       onlyoffice-desktopeditors
+      nautilus
+
+      # media
       mpv
       yt-dlp
+      ani-cli
+
+      # study
+      anki
+
+      # pdf
+      zathura
+
+      # system
+      eza
+      fastfetch
+      ripgrep
+      fd
+      jq
+      tree
+      wl-clipboard
+      cliphist
     ];
 
     programs = {

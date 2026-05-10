@@ -47,15 +47,34 @@ in {
             "--completion-style=detailed"
             "--header-insertion=iwyu"
           ];
-
           "cmake.generator" = "Ninja";
           "cmake.buildDirectory" = "\${workspaceFolder}/build";
           "cmake.configureOnOpen" = true;
           "cmake.exportCompileCommandsFile" = true;
-
-          "[cpp]" = { "editor.defaultFormatter" = "xaver.clang-format"; };
-          "[c]" = { "editor.defaultFormatter" = "xaver.clang-format"; };
+          "[cpp]" = {"editor.defaultFormatter" = "xaver.clang-format";};
+          "[c]" = {"editor.defaultFormatter" = "xaver.clang-format";};
           "clang-format.style" = "LLVM";
+
+          # rust
+          "rust-analyzer.cargo.features" = "all";
+          "rust-analyzer.checkOnSave" = true;
+          "[rust]" = {"editor.defaultFormatter" = "rust-lang.rust-analyzer";};
+
+          # go
+          "go.useLanguageServer" = true;
+          "[go]" = {"editor.defaultFormatter" = "golang.go";};
+
+          # python
+          "[python]" = {"editor.defaultFormatter" = "ms-python.python";};
+
+          # typescript / javascript
+          "[typescript]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[typescriptreact]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[javascript]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[javascriptreact]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[json]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[html]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[css]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
         };
 
         extensions = with pkgs.vscode-extensions; [
@@ -68,12 +87,28 @@ in {
           ms-vscode.cmake-tools
           vadimcn.vscode-lldb
           xaver.clang-format
+
+          # rust
+          rust-lang.rust-analyzer
+
+          # go
+          golang.go
+
+          # python
+          ms-python.python
+
+          # typescript / javascript
+          esbenp.prettier-vscode
+          dbaeumer.vscode-eslint
+
+          # zig
+          ziglang.vscode-zig
         ];
       };
     };
 
     home.packages = with pkgs; [
-      clang 
+      clang
       clang-tools
       cmake
       ninja

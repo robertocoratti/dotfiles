@@ -18,11 +18,11 @@ in {
       polarity = "dark";
 
       image = pkgs.fetchurl {
-        url = "https://wallpaperswide.com/download/toyota_supra_neon_sports_car-wallpaper-3840x2160.jpg";
-        hash = "sha256-cpOCfxZRw5GocoPSjixqG+hbv3olVhz6f+2QF2N/wm8=";
+        url = "https://upload.wikimedia.org/wikipedia/commons/2/22/New_York_City_at_night_HDR.jpg";
+        hash = "sha256-J2Y007Y1zD4is6CWaD9MMeyy2YLrTNnawcP6yC8lk+U=";
       };
 
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
 
       opacity = {
         applications = 1.0;

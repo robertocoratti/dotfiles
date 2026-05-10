@@ -9,6 +9,7 @@
   ...
 }: {
   imports = [
+    ./ai
     ./bluetooth
     ./greetd
     ./i18n
@@ -25,6 +26,8 @@
   ];
 
   modules = {
+    ai.enable = lib.mkDefault true;
+
     bluetooth.enable = lib.mkDefault true;
 
     greetd.enable = lib.mkDefault true;
@@ -80,6 +83,8 @@
       "rd.systemd.show_status=false"
       "rd.udev.log_level=3"
       "udev.log_priority=3"
+      "systemd.show_status=false"
+      "vt.global_cursor_default=0"
     ];
 
     consoleLogLevel = 3;
@@ -90,7 +95,7 @@
       themePackages = with pkgs; [
         adi1090x-plymouth-themes
       ];
-      theme = "rog_2";
+      theme = "cuts_alt";
     };
 
     supportedFilesystems = ["ntfs"];
@@ -108,6 +113,8 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "video"
+      "render"
     ];
   };
 
@@ -128,6 +135,7 @@
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-hyprland
     ];
+    config.common.default = "*";
   };
 
   system.stateVersion = "23.11";

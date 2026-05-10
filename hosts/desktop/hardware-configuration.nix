@@ -36,6 +36,7 @@ in {
     "amdgpu_aspm=1"
     "quiet"
     "loglevel=3"
+    "video=HDMI-A-1:2560x1440@240"
   ];
 
   fileSystems."/" = {

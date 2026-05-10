@@ -13,7 +13,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-
     programs.helix = {
       enable = true;
       defaultEditor = true;
@@ -42,8 +41,8 @@ in {
             "C-/" = "toggle_comments";
           };
 
-          insert = { "C-s" = ":w"; };
-          select = { "C-s" = ":w"; };
+          insert = {"C-s" = ":w";};
+          select = {"C-s" = ":w";};
         };
       };
 
@@ -52,18 +51,68 @@ in {
           {
             name = "cpp";
             scope = "source.cpp";
-            file-types = [ "cpp" "cxx" "cc" "hpp" "hxx" "hh" ];
-            roots = [ "compile_commands.json" "CMakeLists.txt" ];
-            language-servers = [ "clangd" ];
-            formatter = { command = "clang-format"; args = [ "-style=LLVM" ]; };
+            file-types = ["cpp" "cxx" "cc" "hpp" "hxx" "hh"];
+            roots = ["compile_commands.json" "CMakeLists.txt"];
+            language-servers = ["clangd"];
+            formatter = {
+              command = "clang-format";
+              args = ["-style=LLVM"];
+            };
           }
           {
             name = "c";
             scope = "source.c";
-            file-types = [ "c" "h" ];
-            roots = [ "compile_commands.json" "CMakeLists.txt" ];
-            language-servers = [ "clangd" ];
-            formatter = { command = "clang-format"; args = [ "-style=LLVM" ]; };
+            file-types = ["c" "h"];
+            roots = ["compile_commands.json" "CMakeLists.txt"];
+            language-servers = ["clangd"];
+            formatter = {
+              command = "clang-format";
+              args = ["-style=LLVM"];
+            };
+          }
+          {
+            name = "python";
+            language-servers = ["pyright"];
+          }
+          {
+            name = "typescript";
+            auto-format = true;
+            formatter = {
+              command = "prettier";
+              args = ["--parser" "typescript"];
+            };
+          }
+          {
+            name = "tsx";
+            auto-format = true;
+            formatter = {
+              command = "prettier";
+              args = ["--parser" "babel"];
+            };
+          }
+          {
+            name = "javascript";
+            auto-format = true;
+            formatter = {
+              command = "prettier";
+              args = ["--parser" "babel"];
+            };
+          }
+          {
+            name = "jsx";
+            auto-format = true;
+            formatter = {
+              command = "prettier";
+              args = ["--parser" "babel"];
+            };
+          }
+          {
+            name = "zig";
+            language-servers = ["zls"];
+          }
+          {
+            name = "elixir";
+            language-servers = ["elixir-ls"];
           }
         ];
 
@@ -77,6 +126,15 @@ in {
               "--completion-style=detailed"
             ];
           };
+
+          pyright = {
+            command = "pyright-langserver";
+            args = ["--stdio"];
+          };
+
+          zls = {command = "zls";};
+
+          elixir-ls = {command = "elixir-ls";};
         };
       };
     };
@@ -84,6 +142,13 @@ in {
     home.packages = with pkgs; [
       clang
       clang-tools
+      rust-analyzer
+      gopls
+      typescript-language-server
+      prettier
+      pyright
+      zls
+      elixir-ls
     ];
   };
 }

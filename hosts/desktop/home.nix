@@ -12,6 +12,7 @@
   home.homeDirectory = "/home/korazza";
 
   modules = {
+    claudeCode.enable = true;
     fuzzel.enable = true;
     git.enable = true;
     helix.enable = true;
@@ -19,9 +20,17 @@
     hyprpanel.enable = true;
     icons.enable = true;
     kitty.enable = true;
+    lock = {
+      enable = true;
+      idleTimeout = 600;
+    };
     packages.enable = true;
+    screenshot.enable = true;
+    shell.enable = true;
     vscode.enable = true;
   };
+
+  gtk.gtk4.theme = null;
 
   home.stateVersion = "24.05";
 

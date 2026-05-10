@@ -29,6 +29,9 @@ in {
 
         exec-once =
           [
+            "hypridle"
+            "wl-paste --type text --watch cliphist store"
+            "wl-paste --type image --watch cliphist store"
           ]
           ++ lib.optionals waybarEnabled ["waybar"];
 
@@ -145,6 +148,14 @@ in {
             ",XF86AudioPrev,exec,playerctl previous"
             ",XF86AudioNext,exec,playerctl next"
             ",PAUSE,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+            # screenshot
+            ", Print, exec, grimblast --notify copy area"
+            "$mod SHIFT, S, exec, grimblast --notify copy area"
+            "$mod, Print, exec, grimblast --notify save screen"
+            # clipboard
+            "$mod SHIFT, V, exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
+            # lock
+            "$mod, L, exec, hyprlock"
             # apps
             "$mod, RETURN, exec, $terminal"
             "$mod, E, exec, $fileManager"
@@ -156,9 +167,11 @@ in {
             "$mod, H, exec, $terminal -e hx"
             "$mod, M, exec, spotify"
             "$mod, O, exec, obsidian"
+            # webapps
             "$mod, A, exec, $webapp=\"https:\\\\chatgpt.com\""
             "$mod, W, exec, $webapp=\"https:\\\\web.whatsapp.com\""
             "$mod, Y, exec, $webapp=\"https:\\\\youtube.com\""
+            "$mod, I, exec, brave --app=http://localhost:8080"
           ]
           ++ (
             builtins.concatLists (

@@ -1,6 +1,4 @@
 {
-  inputs,
-  pkgs,
   lib,
   config,
   ...
@@ -14,13 +12,12 @@ in {
 
   config = lib.mkIf cfg.enable {
     programs.hyprpanel = {
-      package = inputs.hyprpanel.packages.${pkgs.system}.default;
       enable = true;
       systemd.enable = true;
 
       settings = {
         bar = {
-          launcher.icon = "";
+          launcher.icon = "";
 
           layouts = {
             "*" = {
@@ -28,8 +25,6 @@ in {
                 "dashboard"
                 "workspaces"
                 "windowtitle"
-                "media"
-                "cava"
               ];
               "middle" = [
                 "clock"
@@ -72,8 +67,6 @@ in {
         };
 
         theme = {
-          name = "tokyo_night";
-
           font = {
             name = "MonaspiceNe Nerd Font Mono";
             size = "14px";
