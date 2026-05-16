@@ -17,7 +17,7 @@
     git.enable = true;
     helix.enable = true;
     hyprland.enable = true;
-    hyprpanel.enable = true;
+    ags.enable = true;
     icons.enable = true;
     kitty.enable = true;
     lock = {

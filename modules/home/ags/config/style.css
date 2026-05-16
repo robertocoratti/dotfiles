@@ -1,0 +1,478 @@
+@import "colors.css";
+
+window,
+box,
+button,
+icon,
+slider,
+centerbox,
+separator,
+scrollbar,
+revealer,
+eventbox {
+  all: unset;
+  color: @base05;
+}
+
+* {
+  font-family: "MonaspiceNe Nerd Font Mono";
+  font-size: 13px;
+}
+
+window.Bar {
+  background: none;
+}
+
+.bar-inner {
+  background-color: alpha(@base01, 0.45);
+  border-radius: 12px;
+  border: 1px solid alpha(@base06, 0.08);
+  border-top: 1px solid alpha(@base06, 0.18);
+  padding: 2px 4px;
+}
+
+.module {
+  background-color: alpha(@base02, 0.28);
+  border-radius: 8px;
+  border: 1px solid alpha(@base06, 0.05);
+  padding: 2px 8px;
+  margin: 2px 1px;
+}
+
+.module:hover {
+  background-color: alpha(@base03, 0.5);
+  border-color: alpha(@base06, 0.1);
+}
+
+/* Workspaces */
+.workspaces {
+  margin: 0 4px;
+}
+
+.workspaces button {
+  min-width: 24px;
+  padding: 2px 6px;
+  margin: 2px 1px;
+  border-radius: 6px;
+  color: @base04;
+}
+
+.workspaces button.active {
+  background-color: @base0D;
+  color: @base00;
+}
+
+.workspaces button:hover {
+  background-color: alpha(@base03, 0.7);
+  color: @base05;
+}
+
+/* Window title */
+.window-title {
+  color: @base04;
+  font-size: 12px;
+  margin: 0 4px;
+}
+
+/* Clock */
+.clock label {
+  font-weight: bold;
+}
+
+/* Volume / Microphone */
+.volume,
+.microphone {
+  min-width: 52px;
+}
+
+/* Resources */
+.resources {
+  min-width: 90px;
+}
+
+.resources-key {
+  color: @base04;
+  font-size: 11px;
+}
+
+.resources-sep {
+  color: @base03;
+}
+
+/* Network */
+.network {
+  min-width: 52px;
+}
+
+/* Bluetooth */
+.bluetooth,
+.notifications {
+  min-width: 30px;
+}
+
+/* Power button */
+.power {
+  color: @base08;
+  padding: 2px 8px;
+  margin: 2px 3px 2px 4px;
+  border-radius: 8px;
+}
+
+.power:hover {
+  background-color: alpha(@base08, 0.2);
+}
+
+/* Weather */
+.weather {
+  min-width: 80px;
+}
+
+/* Battery */
+.battery {
+  min-width: 60px;
+}
+
+/* SysTray */
+.systray menubutton > button {
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+/* Power Menu popup */
+window.PowerMenu {
+  background: none;
+}
+
+/* Panel popup windows */
+window.VolumePanel,
+window.MicrophonePanel,
+window.NetworkPanel,
+window.BluetoothPanel,
+window.NotificationsPanel,
+window.CalendarPanel {
+  background: none;
+}
+
+.panel-box {
+  background-color: alpha(@base01, 0.55);
+  border: 1px solid alpha(@base06, 0.1);
+  border-top: 1px solid alpha(@base06, 0.22);
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 220px;
+}
+
+.panel-header {
+  margin-bottom: 8px;
+  color: @base04;
+  font-size: 11px;
+}
+
+.panel-value {
+  color: @base0D;
+  font-weight: bold;
+}
+
+.panel-slider {
+  margin: 4px 0 8px;
+}
+
+.panel-device-name {
+  color: @base03;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.panel-mute-btn {
+  border-radius: 8px;
+  padding: 4px 10px;
+  background-color: alpha(@base02, 0.5);
+  margin-top: 4px;
+}
+
+.panel-mute-btn:hover {
+  background-color: alpha(@base03, 0.6);
+}
+
+.panel-mute-btn.active {
+  background-color: alpha(@base08, 0.3);
+}
+
+.panel-row {
+  margin: 2px 0;
+}
+
+.panel-label {
+  color: @base04;
+  font-size: 11px;
+  min-width: 60px;
+}
+
+.panel-separator {
+  background-color: alpha(@base06, 0.08);
+  min-height: 1px;
+  margin: 6px 0;
+}
+
+.panel-empty {
+  color: @base03;
+  font-size: 11px;
+  margin: 6px 0;
+}
+
+.panel-toggle {
+  border-radius: 8px;
+  padding: 2px 8px;
+  background-color: alpha(@base02, 0.5);
+}
+
+.panel-toggle.active {
+  background-color: alpha(@base0D, 0.3);
+  color: @base0D;
+}
+
+.panel-action-btn {
+  border-radius: 8px;
+  padding: 5px 10px;
+  background-color: alpha(@base02, 0.5);
+  margin-top: 8px;
+}
+
+.panel-action-btn:hover {
+  background-color: alpha(@base03, 0.6);
+}
+
+.panel-action-btn-small {
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 11px;
+  background-color: alpha(@base02, 0.5);
+}
+
+.panel-action-btn-small:hover {
+  background-color: alpha(@base08, 0.25);
+}
+
+/* Notification panel */
+.notif-panel {
+  min-width: 280px;
+}
+
+.notif-scroll {
+  min-height: 60px;
+}
+
+.notif-item {
+  background-color: alpha(@base02, 0.4);
+  border-radius: 8px;
+  padding: 6px 8px;
+  margin: 2px 0;
+}
+
+.notif-app {
+  color: @base0D;
+  font-size: 11px;
+}
+
+.notif-summary {
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.notif-body {
+  color: @base04;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.notif-dismiss {
+  color: @base03;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.notif-dismiss:hover {
+  background-color: alpha(@base08, 0.3);
+  color: @base08;
+}
+
+/* Bluetooth panel */
+.bt-device {
+  border-radius: 8px;
+  padding: 5px 8px;
+  background-color: alpha(@base02, 0.3);
+  margin: 2px 0;
+}
+
+.bt-device.connected {
+  background-color: alpha(@base0D, 0.15);
+}
+
+.bt-connect-btn {
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  background-color: alpha(@base02, 0.6);
+}
+
+.bt-connect-btn:hover {
+  background-color: alpha(@base0D, 0.3);
+}
+
+/* Calendar panel */
+.calendar-panel {
+  min-width: 260px;
+}
+
+/* Weather panel */
+.weather-panel {
+  min-width: 240px;
+}
+
+.weather-big-icon {
+  min-width: 72px;
+  min-height: 72px;
+}
+
+.weather-temp-big {
+  font-size: 28px;
+  font-weight: bold;
+  color: @base05;
+}
+
+.weather-feels {
+  color: @base04;
+  font-size: 11px;
+}
+
+.weather-details {
+  margin: 4px 0;
+}
+
+.weather-detail-key {
+  color: @base03;
+  font-size: 11px;
+}
+
+.weather-detail-val {
+  color: @base05;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.weather-day {
+  padding: 3px 0;
+}
+
+.weather-day-name {
+  color: @base05;
+  min-width: 56px;
+}
+
+.weather-day-temps {
+  color: @base04;
+  min-width: 72px;
+}
+
+.weather-day-precip {
+  color: @base0D;
+  font-size: 11px;
+  min-width: 30px;
+}
+
+/* Click-catcher: transparent full-screen overlay */
+.click-catcher {
+  background: none;
+}
+
+/* Notification popups */
+window.NotificationPopups {
+  background: none;
+}
+
+.popup-container {
+  padding: 0;
+}
+
+.popup-item {
+  background-color: alpha(@base01, 0.7);
+  border: 1px solid alpha(@base06, 0.12);
+  border-top: 1px solid alpha(@base06, 0.24);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  min-width: 280px;
+}
+
+.panel-clock-large {
+  font-size: 30px;
+  font-weight: bold;
+  color: @base05;
+}
+
+.panel-date {
+  color: @base04;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+/* Calendar */
+.cal-month-label {
+  color: @base05;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.cal-header {
+  color: @base03;
+  font-size: 11px;
+  padding: 2px 0;
+}
+
+.cal-day {
+  border-radius: 50%;
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0;
+  background: none;
+  color: @base05;
+}
+
+.cal-day:hover {
+  background-color: alpha(@base03, 0.4);
+}
+
+.cal-day.today {
+  background-color: @base0D;
+  color: @base00;
+  font-weight: bold;
+}
+
+.cal-day.dim {
+  color: @base03;
+}
+
+.powermenu-box {
+  background-color: alpha(@base01, 0.55);
+  border: 1px solid alpha(@base06, 0.1);
+  border-top: 1px solid alpha(@base06, 0.2);
+  border-radius: 12px;
+  padding: 8px;
+  margin: 6px 6px 0;
+}
+
+.powermenu-box button {
+  padding: 8px 20px;
+  margin: 3px 2px;
+  border-radius: 8px;
+  background-color: alpha(@base02, 0.5);
+  min-width: 90px;
+}
+
+.powermenu-box button:hover {
+  background-color: @base02;
+}
+
+.powermenu-box .shutdown:hover { background-color: alpha(@base08, 0.3); }
+.powermenu-box .reboot:hover   { background-color: alpha(@base0A, 0.3); }
+.powermenu-box .logout:hover   { background-color: alpha(@base0D, 0.3); }

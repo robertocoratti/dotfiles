@@ -16,13 +16,13 @@
 
     stylix.url = "github:danth/stylix";
 
-    hyprpanel = {
-      url = "github:Jas-SinghFSU/HyprPanel";
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    claude-code-nix = {
-      url = "github:sadjow/claude-code-nix";
+    ags = {
+      url = "github:aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

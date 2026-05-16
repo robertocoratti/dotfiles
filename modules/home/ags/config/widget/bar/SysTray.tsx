@@ -1,0 +1,28 @@
+import { createBinding } from "ags"
+import { For } from "ags"
+import Tray from "gi://AstalTray"
+
+export default function SysTray() {
+  const tray = Tray.get_default()
+
+  return (
+    <box class="systray">
+      <For each={createBinding(tray, "items")}>
+        {(item: any) => (
+          <menubutton
+            tooltipMarkup={createBinding(item, "tooltipMarkup")}
+            usePopover={false}
+            menuModel={createBinding(item, "menuModel")}
+          >
+            <icon
+              icon={createBinding(item, "iconName").as(
+                (n: string | null) => n || "image-missing"
+              )}
+              pixelSize={16}
+            />
+          </menubutton>
+        )}
+      </For>
+    </box>
+  )
+}

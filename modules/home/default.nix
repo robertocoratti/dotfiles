@@ -11,7 +11,7 @@
     ./git
     ./helix
     ./hyprland
-    ./hyprpanel
+    ./ags
     ./icons
     ./kitty
     ./lock

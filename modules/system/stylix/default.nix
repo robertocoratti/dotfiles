@@ -24,6 +24,10 @@ in {
 
       base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
 
+      override = {
+        base02 = "5c6e82";
+      };
+
       opacity = {
         applications = 1.0;
         terminal = 0.75;

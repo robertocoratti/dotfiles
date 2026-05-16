@@ -36,12 +36,12 @@ in {
           ++ lib.optionals waybarEnabled ["waybar"];
 
         monitor = [
-          "HDMI-A-1, 2560x1440@240, 1920x0, 1, bitdepth, 10, cm, hdr"
+          "HDMI-A-1, 2560x1440@240, 1920x0, 1.25, bitdepth, 10"
           "DP-1, 1920x1080@75, 0x180, 1"
         ];
 
         general = {
-          border_size = 0;
+          border_size = 1;
           allow_tearing = false;
           layout = "dwindle";
 
@@ -64,27 +64,41 @@ in {
           rounding = 16;
           rounding_power = 2;
 
-          #active_opacity = 0.75;
-          #inactive_opacity = 0.75;
+          active_opacity = 0.92;
+          inactive_opacity = 0.80;
 
           blur = {
             enabled = true;
-            size = 20;
+            size = 12;
             passes = 3;
             ignore_opacity = true;
-            noise = 0.01;
+            noise = 0.02;
             contrast = 0.9;
-            brightness = 0.6;
-            vibrancy = 0.75;
-            vibrancy_darkness = 0.75;
+            brightness = 0.85;
+            vibrancy = 0.2;
+            vibrancy_darkness = 0.0;
             popups = true;
+            special = true;
+          };
+
+          shadow = {
+            enabled = true;
+            range = 20;
+            render_power = 2;
+            offset = "0 4";
           };
         };
 
         layerrule = [
           {
-            name = "blur-waybar";
-            "match:namespace" = "waybar";
+            name = "blur-bar";
+            "match:namespace" = "bar";
+            blur = true;
+            blur_popups = true;
+          }
+          {
+            name = "blur-powermenu";
+            "match:namespace" = "powermenu";
             blur = true;
             blur_popups = true;
           }
@@ -95,14 +109,14 @@ in {
             blur_popups = true;
           }
           {
-            name = "blur-bar0";
-            "match:namespace" = "bar0";
+            name = "blur-panel";
+            "match:namespace" = "panel";
             blur = true;
             blur_popups = true;
           }
           {
-            name = "blur-bar1";
-            "match:namespace" = "bar1";
+            name = "blur-notifications";
+            "match:namespace" = "notifications";
             blur = true;
             blur_popups = true;
           }
