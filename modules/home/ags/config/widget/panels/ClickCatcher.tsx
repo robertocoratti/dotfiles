@@ -13,7 +13,7 @@ export function ClickCatcherWindow(monitor: Gdk.Monitor, index: number) {
         Astal.WindowAnchor.LEFT |
         Astal.WindowAnchor.RIGHT
       }
-      layer={Astal.Layer.OVERLAY}
+      layer={Astal.Layer.BOTTOM}
       exclusivity={Astal.Exclusivity.IGNORE}
       marginTop={44}
       visible={false}

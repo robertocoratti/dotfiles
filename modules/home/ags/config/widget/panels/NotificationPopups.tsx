@@ -7,6 +7,17 @@ const popupBoxes: any[] = []
 function addToBox(container: any, notif: any) {
   const win = container.get_toplevel()
 
+  let timeoutId: number
+
+  const removeRow = () => {
+    if (timeoutId) GLib.source_remove(timeoutId)
+    const rowWidget = (row as any)
+    if (rowWidget.get_parent()) {
+      container.remove(rowWidget)
+      if (container.get_children().length === 0) win.visible = false
+    }
+  }
+
   const row = (
     <box class="popup-item" vertical>
       <box>
@@ -16,7 +27,7 @@ function addToBox(container: any, notif: any) {
           hexpand
           halign={Gtk.Align.START}
         />
-        <button class="notif-dismiss" onClicked={() => notif.dismiss()}>
+        <button class="notif-dismiss" onClicked={() => { notif.dismiss(); removeRow() }}>
           <label label="✕" />
         </button>
       </box>
@@ -37,11 +48,8 @@ function addToBox(container: any, notif: any) {
   ;(row as any).show_all()
   win.visible = true
 
-  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 6000, () => {
-    if ((row as any).get_parent()) {
-      container.remove(row)
-      if (container.get_children().length === 0) win.visible = false
-    }
+  timeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 6000, () => {
+    removeRow()
     return GLib.SOURCE_REMOVE
   })
 }

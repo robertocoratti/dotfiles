@@ -1,6 +1,5 @@
 @import "colors.css";
 
-window,
 box,
 button,
 icon,
@@ -14,13 +13,29 @@ eventbox {
   color: @base05;
 }
 
+window,
+window decoration,
+window .window-frame,
+decoration,
+.window-frame {
+  background-color: transparent;
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+.background,
+box.background,
+window .background {
+  background-color: transparent;
+}
+
 * {
   font-family: "MonaspiceNe Nerd Font Mono";
   font-size: 13px;
-}
-
-window.Bar {
-  background: none;
 }
 
 .bar-inner {
@@ -28,129 +43,107 @@ window.Bar {
   border-radius: 12px;
   border: 1px solid alpha(@base06, 0.08);
   border-top: 1px solid alpha(@base06, 0.18);
-  padding: 2px 4px;
-}
-
-.module {
-  background-color: alpha(@base02, 0.28);
-  border-radius: 8px;
-  border: 1px solid alpha(@base06, 0.05);
-  padding: 2px 8px;
-  margin: 2px 1px;
-}
-
-.module:hover {
-  background-color: alpha(@base03, 0.5);
-  border-color: alpha(@base06, 0.1);
-}
-
-/* Workspaces */
-.workspaces {
-  margin: 0 4px;
-}
-
-.workspaces button {
-  min-width: 24px;
   padding: 2px 6px;
-  margin: 2px 1px;
-  border-radius: 6px;
-  color: @base04;
 }
 
-.workspaces button.active {
-  background-color: @base0D;
-  color: @base00;
+/* === Bar items — flat, no background, hover reveals background === */
+.bar-item {
+  all: unset;
+  color: @base05;
+  padding: 2px 8px;
+  border-radius: 8px;
 }
 
-.workspaces button:hover {
-  background-color: alpha(@base03, 0.7);
+.bar-item:hover {
+  background-color: alpha(@base02, 0.5);
+}
+
+.bar-item-icon {
+  padding: 3px 5px;
+}
+
+.indicators-group {
+  padding: 2px 6px;
+}
+
+.indicators-group icon {
   color: @base05;
 }
 
-/* Window title */
-.window-title {
+/* === Workspaces === */
+.bar-ws {
+  padding: 2px 7px;
+  border-radius: 8px;
   color: @base04;
-  font-size: 12px;
-  margin: 0 4px;
 }
 
-/* Clock */
-.clock label {
+.bar-ws:hover {
+  background-color: alpha(@base02, 0.5);
+  color: @base05;
+}
+
+.bar-ws.active {
+  background-color: alpha(@base0D, 0.85);
+  color: @base00;
   font-weight: bold;
 }
 
-/* Volume / Microphone */
-.volume,
-.microphone {
-  min-width: 52px;
+.bar-ws-label {
+  font-size: 13px;
 }
 
-/* Resources */
-.resources {
-  min-width: 90px;
+.bar-ws-icons {
 }
 
-.resources-key {
+.bar-ws-app-icon {
+  color: inherit;
+}
+
+/* === Window title === */
+.bar-window-title {
   color: @base04;
   font-size: 11px;
 }
 
-.resources-sep {
-  color: @base03;
+/* === Clock === */
+.bar-clock {
+  font-weight: bold;
+  font-size: 13px;
 }
 
-/* Network */
-.network {
-  min-width: 52px;
+/* === Resources === */
+.bar-res-cpu { color: @base0A; font-size: 11px; font-weight: bold; }
+.bar-res-ram { color: @base0D; font-size: 11px; font-weight: bold; }
+
+/* === Notifications badge === */
+.bar-notif-badge {
+  background-color: @base08;
+  color: @base00;
+  border-radius: 50%;
+  min-width: 15px;
+  min-height: 15px;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 0 3px;
 }
 
-/* Bluetooth */
-.bluetooth,
-.notifications {
-  min-width: 30px;
-}
-
-/* Power button */
-.power {
+/* === Power === */
+.bar-power {
   color: @base08;
-  padding: 2px 8px;
-  margin: 2px 3px 2px 4px;
-  border-radius: 8px;
 }
 
-.power:hover {
+.bar-power:hover {
   background-color: alpha(@base08, 0.2);
 }
 
-/* Weather */
-.weather {
-  min-width: 80px;
+/* === SysTray === */
+.bar-tray-item {
+  padding: 3px 5px;
+  border-radius: 6px;
 }
 
-/* Battery */
-.battery {
-  min-width: 60px;
-}
-
-/* SysTray */
-.systray menubutton > button {
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-
-/* Power Menu popup */
-window.PowerMenu {
-  background: none;
-}
-
-/* Panel popup windows */
-window.VolumePanel,
-window.MicrophonePanel,
-window.NetworkPanel,
-window.BluetoothPanel,
-window.NotificationsPanel,
-window.CalendarPanel {
-  background: none;
+.bar-tray-item:hover {
+  background-color: alpha(@base02, 0.5);
 }
 
 .panel-box {
@@ -175,6 +168,7 @@ window.CalendarPanel {
 
 .panel-slider {
   margin: 4px 0 8px;
+  min-height: 28px;
 }
 
 .panel-device-name {
@@ -196,6 +190,22 @@ window.CalendarPanel {
 
 .panel-mute-btn.active {
   background-color: alpha(@base08, 0.3);
+}
+
+.panel-device-btn {
+  border-radius: 8px;
+  padding: 5px 10px;
+  background-color: alpha(@base02, 0.5);
+  margin: 1px 0;
+}
+
+.panel-device-btn:hover {
+  background-color: alpha(@base03, 0.6);
+}
+
+.panel-device-btn.active {
+  background-color: alpha(@base0D, 0.25);
+  color: @base0D;
 }
 
 .panel-row {
@@ -452,15 +462,6 @@ window.NotificationPopups {
   color: @base03;
 }
 
-.powermenu-box {
-  background-color: alpha(@base01, 0.55);
-  border: 1px solid alpha(@base06, 0.1);
-  border-top: 1px solid alpha(@base06, 0.2);
-  border-radius: 12px;
-  padding: 8px;
-  margin: 6px 6px 0;
-}
-
 .powermenu-box button {
   padding: 8px 20px;
   margin: 3px 2px;
@@ -473,6 +474,51 @@ window.NotificationPopups {
   background-color: @base02;
 }
 
-.powermenu-box .shutdown:hover { background-color: alpha(@base08, 0.3); }
-.powermenu-box .reboot:hover   { background-color: alpha(@base0A, 0.3); }
-.powermenu-box .logout:hover   { background-color: alpha(@base0D, 0.3); }
+.powermenu-box .shutdown:hover   { background-color: alpha(@base08, 0.3); }
+.powermenu-box .reboot:hover    { background-color: alpha(@base0A, 0.3); }
+.powermenu-box .logout:hover    { background-color: alpha(@base0D, 0.3); }
+.powermenu-box .hibernate:hover { background-color: alpha(@base0E, 0.3); }
+
+/* Volume/Mic OSD — vertical slider at right-center */
+.osd-box {
+  background-color: alpha(@base01, 0.55);
+  border: 1px solid alpha(@base06, 0.1);
+  border-left: 1px solid alpha(@base06, 0.22);
+  border-radius: 10px;
+  padding: 10px 6px;
+}
+
+.osd-box icon {
+  color: @base04;
+  margin-bottom: 6px;
+}
+
+.osd-slider {
+  min-width: 32px;
+  min-height: 100px;
+}
+
+.osd-slider trough {
+  background-color: alpha(@base02, 0.5);
+  border-radius: 6px;
+  min-width: 6px;
+}
+
+.osd-slider trough highlight {
+  background-color: @base0D;
+  border-radius: 6px;
+}
+
+.osd-slider slider {
+  background-color: @base05;
+  border-radius: 50%;
+  min-width: 14px;
+  min-height: 14px;
+}
+
+.osd-value {
+  color: @base0D;
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: 6px;
+}

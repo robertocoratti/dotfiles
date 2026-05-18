@@ -1,6 +1,5 @@
 import { createBinding } from "ags"
 import Notifd from "gi://AstalNotifd"
-import { Gtk } from "ags/gtk3"
 import { togglePanel } from "../utils/panelManager"
 
 export default function Notifications() {
@@ -9,15 +8,16 @@ export default function Notifications() {
 
   return (
     <button
-      class="module notifications"
+      class="bar-item bar-item-icon"
       tooltipText="Notifiche"
       onClicked={(self: any) => togglePanel("NotificationsPanel", self)}
     >
-      <box spacing={6} valign={Gtk.Align.CENTER}>
-        <icon icon="preferences-system-notifications-symbolic" pixelSize={20} valign={Gtk.Align.CENTER} />
+      <box>
+        <icon icon="notification-symbolic" pixelSize={22} />
         <label
           label={count.as((n: number) => `${n}`)}
-          valign={Gtk.Align.CENTER}
+          class="bar-notif-badge"
+          visible={count.as((n: number) => n > 0)}
         />
       </box>
     </button>

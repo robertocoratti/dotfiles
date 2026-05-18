@@ -1,6 +1,5 @@
 import { createPoll } from "ags/time"
 import { execAsync } from "ags/process"
-import { Gtk } from "ags/gtk3"
 import { togglePanel } from "../utils/panelManager"
 
 const URL =
@@ -44,23 +43,17 @@ export default function Weather() {
 
   return (
     <button
-      class="module weather"
+      class="bar-item"
       tooltipText="Meteo: Colle Mattia"
       onClicked={(self: any) => togglePanel("WeatherPanel", self)}
     >
-      <box
-        spacing={6}
-        halign={Gtk.Align.CENTER}
-        valign={Gtk.Align.CENTER}
-      >
+      <box spacing={4}>
         <icon
           icon={weather.as((w: WeatherData) => w.icon)}
           pixelSize={20}
-          valign={Gtk.Align.CENTER}
         />
         <label
           label={weather.as((w: WeatherData) => w.temp)}
-          valign={Gtk.Align.CENTER}
         />
       </box>
     </button>

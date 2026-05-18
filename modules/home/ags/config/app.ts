@@ -2,15 +2,15 @@ import app from "ags/gtk3/app"
 import GLib from "gi://GLib?version=2.0"
 import Bar from "./widget/bar/Bar"
 import { PowerMenuWindow } from "./widget/bar/PowerMenu"
-import { VolumePanelWindow } from "./widget/panels/VolumePanel"
-import { MicrophonePanelWindow } from "./widget/panels/MicrophonePanel"
-import { NetworkPanelWindow } from "./widget/panels/NetworkPanel"
-import { BluetoothPanelWindow } from "./widget/panels/BluetoothPanel"
+import { QuickSettingsWindow } from "./widget/panels/QuickSettings"
 import { NotificationsPanelWindow } from "./widget/panels/NotificationsPanel"
 import { CalendarPanelWindow } from "./widget/panels/CalendarPanel"
 import { WeatherPanelWindow } from "./widget/panels/WeatherPanel"
 import { ClickCatcherWindow } from "./widget/panels/ClickCatcher"
 import { NotificationPopupsWindow } from "./widget/panels/NotificationPopups"
+import { VolumeOsdWindow } from "./widget/panels/VolumeOsd"
+import { MicrophoneOsdWindow } from "./widget/panels/MicrophoneOsd"
+import { registerEscapeHandler } from "./widget/utils/panelManager"
 
 function registerWindow(fn: () => any) {
   const win = fn()
@@ -22,18 +22,18 @@ app.start({
   main() {
     let i = 0
     app.get_monitors().forEach((monitor: any) => {
-      Bar(monitor)
+      registerWindow(() => Bar(monitor))
       registerWindow(() => ClickCatcherWindow(monitor, i))
       registerWindow(() => NotificationPopupsWindow(monitor))
       i++
     })
     registerWindow(PowerMenuWindow)
-    registerWindow(VolumePanelWindow)
-    registerWindow(MicrophonePanelWindow)
-    registerWindow(NetworkPanelWindow)
-    registerWindow(BluetoothPanelWindow)
+    registerWindow(QuickSettingsWindow)
     registerWindow(NotificationsPanelWindow)
     registerWindow(CalendarPanelWindow)
     registerWindow(WeatherPanelWindow)
+    registerWindow(VolumeOsdWindow)
+    registerWindow(MicrophoneOsdWindow)
+    registerEscapeHandler()
   },
 })

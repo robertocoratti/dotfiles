@@ -6,7 +6,7 @@ export function PowerMenuWindow() {
   return (
     <window
       name="PowerMenu"
-      namespace="powermenu"
+      namespace="panel"
       anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
       layer={Astal.Layer.OVERLAY}
       exclusivity={Astal.Exclusivity.IGNORE}
@@ -14,7 +14,7 @@ export function PowerMenuWindow() {
       marginTop={44}
       marginRight={6}
     >
-      <box class="powermenu-box" vertical>
+      <box class="panel-box powermenu-box" vertical>
         <button
           class="shutdown"
           onClicked={() => {
@@ -40,6 +40,18 @@ export function PowerMenuWindow() {
           </box>
         </button>
         <button
+          class="hibernate"
+          onClicked={() => {
+            closeActivePanel()
+            exec("systemctl hibernate")
+          }}
+        >
+          <box>
+            <icon icon="weather-clear-night-symbolic" pixelSize={18} />
+            <label label="  Iberna" />
+          </box>
+        </button>
+        <button
           class="logout"
           onClicked={() => {
             closeActivePanel()
@@ -59,11 +71,11 @@ export function PowerMenuWindow() {
 export default function PowerButton() {
   return (
     <button
-      class="power"
+      class="bar-item bar-item-icon bar-power"
       tooltipText="Menu di spegnimento"
       onClicked={(self: any) => togglePanel("PowerMenu", self)}
     >
-      <icon icon="system-shutdown-symbolic" pixelSize={20} />
+      <icon icon="system-shutdown-symbolic" pixelSize={22} />
     </button>
   )
 }

@@ -49,7 +49,91 @@ const empty: WeatherFull = {
 }
 
 export function WeatherPanelWindow() {
-  const weather = createPoll<WeatherFull>(empty, 600_000, async () => {
+  // All widgets created upfront, updated by applyWeather()
+  const bigIcon = new Gtk.Image()
+  bigIcon.set_pixel_size(72)
+  bigIcon.set_from_icon_name(empty.icon, Gtk.IconSize.DIALOG)
+  bigIcon.show()
+
+  const tempLabel = new Gtk.Label({ label: "0°C" })
+  tempLabel.get_style_context().add_class("weather-temp-big")
+  tempLabel.set_halign(Gtk.Align.START)
+  tempLabel.show()
+
+  const feelsLabel = new Gtk.Label({ label: "Percepita 0°C" })
+  feelsLabel.get_style_context().add_class("weather-feels")
+  feelsLabel.set_halign(Gtk.Align.START)
+  feelsLabel.show()
+
+  const humidityLabel = new Gtk.Label({ label: "0%" })
+  humidityLabel.get_style_context().add_class("weather-detail-val")
+  humidityLabel.show()
+
+  const windLabel = new Gtk.Label({ label: "0 km/h" })
+  windLabel.get_style_context().add_class("weather-detail-val")
+  windLabel.show()
+
+  // Daily forecast rows (6 rows with placeholder content)
+  const dailyRows: any[] = []
+  const dailyBox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 2 })
+
+  for (let i = 0; i < 6; i++) {
+    const row = new Gtk.Box({ spacing: 8 })
+    row.get_style_context().add_class("weather-day")
+
+    const nameLabel = new Gtk.Label({ label: "---" })
+    nameLabel.get_style_context().add_class("weather-day-name")
+    nameLabel.set_halign(Gtk.Align.START)
+    nameLabel.set_hexpand(true)
+
+    const icon = new Gtk.Image()
+    icon.set_from_icon_name("weather-clear-symbolic", Gtk.IconSize.DIALOG)
+    icon.set_pixel_size(18)
+    icon.set_valign(Gtk.Align.CENTER)
+
+    const temps = new Gtk.Label({ label: "--° / --°" })
+    temps.get_style_context().add_class("weather-day-temps")
+    temps.set_halign(Gtk.Align.END)
+
+    const precip = new Gtk.Label({ label: "--%" })
+    precip.get_style_context().add_class("weather-day-precip")
+
+    row.add(nameLabel)
+    row.add(icon)
+    row.add(temps)
+    row.add(precip)
+    row.show_all()
+    dailyBox.add(row)
+    dailyRows.push({ nameLabel, icon, temps, precip })
+  }
+  dailyBox.show()
+
+  // Updates all widgets with fetched weather data
+  function applyWeather(w: WeatherFull) {
+    bigIcon.set_from_icon_name(w.icon, Gtk.IconSize.DIALOG)
+    tempLabel.set_label(`${w.temp}°C`)
+    feelsLabel.set_label(`Percepita ${w.feelsLike}°C`)
+    humidityLabel.set_label(`${w.humidity}%`)
+    windLabel.set_label(`${w.wind} km/h`)
+
+    for (let i = 0; i < 6; i++) {
+      const day = w.daily[i]
+      const widgets = dailyRows[i]
+      if (day) {
+        widgets.nameLabel.set_label(day.name)
+        widgets.icon.set_from_icon_name(day.icon, Gtk.IconSize.DIALOG)
+        widgets.temps.set_label(`${day.max}° / ${day.min}°`)
+        widgets.precip.set_label(`${day.precip}%`)
+      } else {
+        widgets.nameLabel.set_label("---")
+        widgets.temps.set_label("--° / --°")
+        widgets.precip.set_label("--%")
+      }
+    }
+  }
+
+  // Fetch weather now, then every 10 minutes
+  async function tick() {
     try {
       const out = await execAsync(["curl", "-sf", "--max-time", "5", URL])
       const d = JSON.parse(out)
@@ -63,67 +147,75 @@ export function WeatherPanelWindow() {
         min: Math.round(d.daily.temperature_2m_min[i]),
         precip: d.daily.precipitation_probability_max[i] ?? 0,
       }))
-      return {
+      applyWeather({
         icon: weatherIconName(c.weather_code),
         temp: Math.round(c.temperature_2m),
         feelsLike: Math.round(c.apparent_temperature),
         humidity: Math.round(c.relative_humidity_2m),
         wind: Math.round(c.wind_speed_10m),
         daily,
-      }
+      })
     } catch {
-      return empty
+      // keep previous data on error
     }
-  })
+  }
 
-  const bigIcon = new Gtk.Image()
-  bigIcon.set_pixel_size(72)
-  bigIcon.set_from_icon_name(empty.icon, Gtk.IconSize.DIALOG)
-  bigIcon.show()
-  weather.subscribe((w: WeatherFull) => {
-    bigIcon.set_from_icon_name(w.icon, Gtk.IconSize.DIALOG)
-  })
+  tick() // fetch immediately
 
-  const dailyBox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 2 })
-  dailyBox.show()
-  let dailyRows: any[] = []
-  weather.subscribe((w: WeatherFull) => {
-    dailyRows.forEach((r) => dailyBox.remove(r))
-    dailyRows = []
-    for (const day of w.daily) {
-      const row = new Gtk.Box({ spacing: 8 })
-      row.get_style_context().add_class("weather-day")
+  // Poll trigger every 10 minutes (createPoll callback fires at interval, we fetch inside)
+  createPoll(0, 600_000, () => { tick(); return 0 })
 
-      const nameLabel = new Gtk.Label({ label: day.name })
-      nameLabel.get_style_context().add_class("weather-day-name")
-      nameLabel.set_halign(Gtk.Align.START)
-      nameLabel.set_hexpand(true)
+  // Build layout
+  const detailsBox = new Gtk.Box({ spacing: 24 })
+  detailsBox.get_style_context().add_class("weather-details")
 
-      const icon = new Gtk.Image()
-      icon.set_from_icon_name(day.icon, Gtk.IconSize.DIALOG)
-      icon.set_pixel_size(18)
-      icon.set_valign(Gtk.Align.CENTER)
+  const humBox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 1 })
+  humBox.set_halign(Gtk.Align.CENTER)
+  const humKey = new Gtk.Label({ label: "Umidità" })
+  humKey.get_style_context().add_class("weather-detail-key")
+  humBox.add(humKey)
+  humBox.add(humidityLabel)
+  humBox.show_all()
 
-      const temps = new Gtk.Label({ label: `${day.max}° / ${day.min}°` })
-      temps.get_style_context().add_class("weather-day-temps")
-      temps.set_halign(Gtk.Align.END)
+  const windBox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 1 })
+  windBox.set_halign(Gtk.Align.CENTER)
+  const windKey = new Gtk.Label({ label: "Vento" })
+  windKey.get_style_context().add_class("weather-detail-key")
+  windBox.add(windKey)
+  windBox.add(windLabel)
+  windBox.show_all()
 
-      row.add(nameLabel)
-      row.add(icon)
-      row.add(temps)
+  detailsBox.add(humBox)
+  detailsBox.add(windBox)
+  detailsBox.show()
 
-      if (day.precip > 0) {
-        const precip = new Gtk.Label({ label: `${day.precip}%` })
-        precip.get_style_context().add_class("weather-day-precip")
-        row.add(precip)
-      }
+  const sep = new Gtk.Box({})
+  sep.get_style_context().add_class("panel-separator")
+  sep.show()
 
-      row.show_all()
-      dailyBox.add(row)
-      dailyRows.push(row)
-    }
-    dailyBox.queue_resize()
-  })
+  const outerBox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 4 })
+  outerBox.get_style_context().add_class("panel-box")
+  outerBox.get_style_context().add_class("weather-panel")
+
+  const topRow = new Gtk.Box({ spacing: 16 })
+  topRow.set_valign(Gtk.Align.CENTER)
+  topRow.add(bigIcon)
+  const tempsBox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 4 })
+  tempsBox.set_valign(Gtk.Align.CENTER)
+  tempsBox.add(tempLabel)
+  tempsBox.add(feelsLabel)
+  topRow.add(tempsBox)
+  topRow.show_all()
+
+  outerBox.add(topRow)
+  outerBox.add(detailsBox)
+  outerBox.add(sep)
+  outerBox.add(dailyBox)
+  outerBox.show()
+
+  const wrapper = new Gtk.Box({})
+  wrapper.add(outerBox)
+  wrapper.show()
 
   return (
     <window
@@ -136,47 +228,7 @@ export function WeatherPanelWindow() {
       marginTop={44}
       marginRight={6}
     >
-      <box class="panel-box weather-panel" vertical spacing={4}>
-        {/* Current conditions */}
-        <box spacing={16} valign={Gtk.Align.CENTER}>
-          {bigIcon}
-          <box vertical valign={Gtk.Align.CENTER} spacing={4}>
-            <label
-              label={weather.as((w: WeatherFull) => `${w.temp}°C`)}
-              class="weather-temp-big"
-              halign={Gtk.Align.START}
-            />
-            <label
-              label={weather.as((w: WeatherFull) => `Percepita ${w.feelsLike}°C`)}
-              class="weather-feels"
-              halign={Gtk.Align.START}
-            />
-          </box>
-        </box>
-
-        {/* Details row */}
-        <box class="weather-details" spacing={24}>
-          <box vertical spacing={1} halign={Gtk.Align.CENTER}>
-            <label label="Umidità" class="weather-detail-key" />
-            <label
-              label={weather.as((w: WeatherFull) => `${w.humidity}%`)}
-              class="weather-detail-val"
-            />
-          </box>
-          <box vertical spacing={1} halign={Gtk.Align.CENTER}>
-            <label label="Vento" class="weather-detail-key" />
-            <label
-              label={weather.as((w: WeatherFull) => `${w.wind} km/h`)}
-              class="weather-detail-val"
-            />
-          </box>
-        </box>
-
-        <box class="panel-separator" />
-
-        {/* Daily forecast */}
-        {dailyBox}
-      </box>
+      {wrapper}
     </window>
   )
 }

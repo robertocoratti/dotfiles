@@ -1,6 +1,5 @@
 import { createBinding } from "ags"
 import Battery from "gi://AstalBattery"
-import { Gtk } from "ags/gtk3"
 
 function batteryIcon(pct: number, charging: boolean): string {
   const level =
@@ -22,14 +21,11 @@ export default function BatteryWidget() {
   const iconName = pct.as((p: number) => batteryIcon(p, charging.peek()))
 
   return (
-    <button class="module battery" tooltipText="Batteria">
-      <box spacing={6} valign={Gtk.Align.CENTER}>
-        <icon icon={iconName} pixelSize={20} valign={Gtk.Align.CENTER} />
-        <label
-          label={pct.as((p: number) => `${Math.round(p * 100)}%`)}
-          valign={Gtk.Align.CENTER}
-        />
-      </box>
+    <button
+      class="bar-item bar-item-icon"
+      tooltipText={pct.as((p: number) => `Batteria: ${Math.round(p * 100)}%`)}
+    >
+      <icon icon={iconName} pixelSize={22} />
     </button>
   )
 }

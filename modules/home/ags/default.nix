@@ -41,6 +41,7 @@
   configDir = pkgs.runCommand "ags-config" {} ''
     mkdir -p $out
     cp -r ${./config}/. $out/
+    chmod u+w $out/colors.css $out/config.ts
     cp ${colorsCSS} $out/colors.css
     cp ${configTS} $out/config.ts
   '';

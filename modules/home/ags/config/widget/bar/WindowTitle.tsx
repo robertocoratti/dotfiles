@@ -11,7 +11,7 @@ export default function WindowTitle() {
 
   return (
     <label
-      class="module window-title"
+      class="bar-window-title"
       label={title}
       visible={title.as((t) => t.length > 0)}
     />

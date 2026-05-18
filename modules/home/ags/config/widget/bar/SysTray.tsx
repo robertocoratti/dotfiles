@@ -6,10 +6,11 @@ export default function SysTray() {
   const tray = Tray.get_default()
 
   return (
-    <box class="systray">
+    <box>
       <For each={createBinding(tray, "items")}>
         {(item: any) => (
           <menubutton
+            class="bar-tray-item"
             tooltipMarkup={createBinding(item, "tooltipMarkup")}
             usePopover={false}
             menuModel={createBinding(item, "menuModel")}
@@ -18,7 +19,7 @@ export default function SysTray() {
               icon={createBinding(item, "iconName").as(
                 (n: string | null) => n || "image-missing"
               )}
-              pixelSize={16}
+              pixelSize={18}
             />
           </menubutton>
         )}
