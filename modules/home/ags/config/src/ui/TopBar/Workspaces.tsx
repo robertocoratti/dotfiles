@@ -1,4 +1,4 @@
-import { Gtk, Gdk, App } from "ags/gtk4";
+import { Gtk, Gdk } from "ags/gtk4";
 import Hyprland from "gi://AstalHyprland";
 import Box from "../../components/Box";
 import Button from "../../components/Button";
@@ -45,29 +45,6 @@ const KNOWN_ICONS: Record<string, string> = {
   "element": "element-desktop",
 };
 
-function lookupIcon(name: string): string | null {
-  const display = Gdk.Display.get_default();
-  if (!display) return null;
-
-  const theme = Gtk.IconTheme.get_for_display(display);
-  const targetSize = 16;
-
-  if (theme.has_gicon(App.lookup_icon(name))) {
-    return name;
-  }
-
-  const known = KNOWN_ICONS[name];
-  if (known && theme.has_gicon(App.lookup_icon(known))) {
-    return known;
-  }
-
-  if (theme.has_gicon(App.lookup_icon(name))) {
-    return name;
-  }
-
-  return "application-x-executable";
-}
-
 function getAppIcon(client: Hyprland.Client): string {
   const wmClass = client.class?.trim() || "";
   const lowerClass = wmClass.toLowerCase();
@@ -83,10 +60,10 @@ function getAppIcon(client: Hyprland.Client): string {
   const display = Gdk.Display.get_default();
   if (display) {
     const theme = Gtk.IconTheme.get_for_display(display);
-    if (lowerClass && theme.has_gicon(App.lookup_icon(lowerClass))) {
+    if (lowerClass && theme.has_icon(lowerClass)) {
       return lowerClass;
     }
-    if (wmClass && theme.has_gicon(App.lookup_icon(wmClass))) {
+    if (wmClass && theme.has_icon(wmClass)) {
       return wmClass;
     }
   }
