@@ -67,7 +67,6 @@ in {
       enable = true;
       configDir = configDir;
       extraPackages = with pkgs.astal; [
-        astal3
         io
         hyprland
         wireplumber

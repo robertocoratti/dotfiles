@@ -1,524 +1,518 @@
 @import "colors.css";
 
-box,
-button,
-icon,
-slider,
-centerbox,
-separator,
-scrollbar,
-revealer,
-eventbox {
-  all: unset;
-  color: @base05;
-}
+/* Nord palette */
+@define-color nord0 #2e3440;
+@define-color nord1 #3b4252;
+@define-color nord2 #434c5e;
+@define-color nord3 #4c566a;
+@define-color nord4 #d8dee9;
+@define-color nord5 #e5e9f0;
+@define-color nord6 #eceff4;
+@define-color nord7 #8fbcbb;
+@define-color nord8 #88c0d0;
+@define-color nord9 #81a1c1;
+@define-color nord10 #5e81ac;
+@define-color nord11 #bf616a;
+@define-color nord12 #d08770;
+@define-color nord13 #ebcb8b;
+@define-color nord14 #a3be8c;
+@define-color nord15 #b48ead;
 
-window,
-window decoration,
-window .window-frame,
-decoration,
-.window-frame {
-  background-color: transparent;
-  background: none;
-  border: none;
-  box-shadow: none;
-  outline: none;
-  margin: 0;
-  padding: 0;
-}
+/* Glassmorphism reusable */
+@define-color glass-bg alpha(@nord1, 0.75);
+@define-color glass-border alpha(@nord4, 0.12);
+@define-color glass-shadow alpha(@nord0, 0.6);
 
-.background,
-box.background,
-window .background {
-  background-color: transparent;
-}
-
+/* ============================
+   Reset globali
+   ============================ */
 * {
-  font-family: "MonaspiceNe Nerd Font Mono";
+  all: unset;
+  font-family: "Monaspace Nerd Font", "Symbols Nerd Font", sans-serif;
   font-size: 13px;
+  color: @nord4;
+}
+
+/* ============================
+   Trasparenza finestre
+   ============================ */
+window {
+  background: transparent;
+}
+
+/* ============================
+   Screen Corners
+   ============================ */
+.screen-corners {
+  border-radius: 0;
+  background: transparent;
+}
+
+/* ============================
+   Bar
+   ============================ */
+.bar-bg {
+  background: @glass-bg;
+  border-radius: 12px;
+  margin: 6px 12px;
+  padding: 0 8px;
+  box-shadow: 0 4px 24px @glass-shadow;
+  min-height: 36px;
 }
 
 .bar-inner {
-  background-color: alpha(@base01, 0.45);
-  border-radius: 12px;
-  border: 1px solid alpha(@base06, 0.08);
-  border-top: 1px solid alpha(@base06, 0.18);
-  padding: 2px 6px;
+  min-height: 36px;
 }
 
-/* === Bar items — flat, no background, hover reveals background === */
 .bar-item {
-  all: unset;
-  color: @base05;
-  padding: 2px 8px;
+  padding: 0 6px;
+  min-height: 36px;
+}
+
+.bar-item button {
   border-radius: 8px;
-}
-
-.bar-item:hover {
-  background-color: alpha(@base02, 0.5);
-}
-
-.bar-item-icon {
-  padding: 3px 5px;
-}
-
-.indicators-group {
   padding: 2px 6px;
+  transition: background 200ms ease;
 }
 
-.indicators-group icon {
-  color: @base05;
+.bar-item button:hover {
+  background: alpha(@nord4, 0.1);
 }
 
-/* === Workspaces === */
+.bar-item button:active {
+  background: alpha(@nord4, 0.15);
+}
+
+/* Workspace dots */
 .bar-ws {
-  padding: 2px 7px;
+  padding: 0 2px;
+}
+
+.bar-ws button {
+  padding: 0 4px;
   border-radius: 8px;
-  color: @base04;
 }
 
-.bar-ws:hover {
-  background-color: alpha(@base02, 0.5);
-  color: @base05;
+.bar-ws-dot {
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 50%;
+  background: alpha(@nord4, 0.4);
+  margin: 0 1px;
 }
 
-.bar-ws.active {
-  background-color: alpha(@base0D, 0.85);
-  color: @base00;
-  font-weight: bold;
-}
-
-.bar-ws-label {
-  font-size: 13px;
-}
-
-.bar-ws-icons {
+.bar-ws.active .bar-ws-dot {
+  min-width: 10px;
+  min-height: 10px;
+  background: @nord8;
 }
 
 .bar-ws-app-icon {
-  color: inherit;
+  margin: 0 1px;
+  opacity: 0.7;
 }
 
-/* === Window title === */
-.bar-window-title {
-  color: @base04;
-  font-size: 11px;
-}
-
-/* === Clock === */
+/* Clock */
 .bar-clock {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 13px;
+  padding: 0 8px;
 }
 
-/* === Resources === */
-.bar-res-cpu { color: @base0A; font-size: 11px; font-weight: bold; }
-.bar-res-ram { color: @base0D; font-size: 11px; font-weight: bold; }
+.bar-clock-date {
+  font-size: 11px;
+  color: alpha(@nord4, 0.6);
+}
 
-/* === Notifications badge === */
+/* Weather */
+.bar-weather {
+  padding: 0 8px;
+}
+
+.bar-weather-temp {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* System tray */
+.bar-tray {
+  padding: 0 4px;
+}
+
+.bar-tray image {
+  margin: 0 2px;
+}
+
+/* Notifications bell */
+.bar-notif {
+  padding: 0 4px;
+}
+
 .bar-notif-badge {
-  background-color: @base08;
-  color: @base00;
+  background: @nord11;
+  color: @nord6;
+  font-size: 10px;
+  font-weight: 700;
   border-radius: 50%;
-  min-width: 15px;
-  min-height: 15px;
-  font-size: 9px;
-  font-weight: bold;
-  padding: 0 3px;
+  min-width: 16px;
+  min-height: 16px;
+  margin-top: -4px;
+  margin-left: -6px;
 }
 
-/* === Power === */
+/* Power button */
 .bar-power {
-  color: @base08;
+  padding: 0 4px;
 }
 
-.bar-power:hover {
-  background-color: alpha(@base08, 0.2);
+.bar-power button:hover {
+  background: alpha(@nord11, 0.2);
 }
 
-/* === SysTray === */
-.bar-tray-item {
-  padding: 3px 5px;
-  border-radius: 6px;
-}
-
-.bar-tray-item:hover {
-  background-color: alpha(@base02, 0.5);
-}
-
+/* ============================
+   Panels (Modals)
+   ============================ */
 .panel-box {
-  background-color: alpha(@base01, 0.55);
-  border: 1px solid alpha(@base06, 0.1);
-  border-top: 1px solid alpha(@base06, 0.22);
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 220px;
+  background: @glass-bg;
+  border: 1px solid @glass-border;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px @glass-shadow;
+  margin: 12px;
+  padding: 16px;
+  min-width: 360px;
 }
 
 .panel-header {
-  margin-bottom: 8px;
-  color: @base04;
-  font-size: 11px;
-}
-
-.panel-value {
-  color: @base0D;
-  font-weight: bold;
-}
-
-.panel-slider {
-  margin: 4px 0 8px;
-  min-height: 28px;
-}
-
-.panel-device-name {
-  color: @base03;
-  font-size: 11px;
-  margin-top: 4px;
-}
-
-.panel-mute-btn {
-  border-radius: 8px;
-  padding: 4px 10px;
-  background-color: alpha(@base02, 0.5);
-  margin-top: 4px;
-}
-
-.panel-mute-btn:hover {
-  background-color: alpha(@base03, 0.6);
-}
-
-.panel-mute-btn.active {
-  background-color: alpha(@base08, 0.3);
-}
-
-.panel-device-btn {
-  border-radius: 8px;
-  padding: 5px 10px;
-  background-color: alpha(@base02, 0.5);
-  margin: 1px 0;
-}
-
-.panel-device-btn:hover {
-  background-color: alpha(@base03, 0.6);
-}
-
-.panel-device-btn.active {
-  background-color: alpha(@base0D, 0.25);
-  color: @base0D;
-}
-
-.panel-row {
-  margin: 2px 0;
-}
-
-.panel-label {
-  color: @base04;
-  font-size: 11px;
-  min-width: 60px;
+  font-size: 15px;
+  font-weight: 700;
+  color: @nord6;
+  margin-bottom: 12px;
 }
 
 .panel-separator {
-  background-color: alpha(@base06, 0.08);
+  background: @glass-border;
   min-height: 1px;
-  margin: 6px 0;
+  margin: 8px 0;
 }
 
-.panel-empty {
-  color: @base03;
-  font-size: 11px;
-  margin: 6px 0;
-}
-
-.panel-toggle {
-  border-radius: 8px;
-  padding: 2px 8px;
-  background-color: alpha(@base02, 0.5);
-}
-
-.panel-toggle.active {
-  background-color: alpha(@base0D, 0.3);
-  color: @base0D;
-}
-
-.panel-action-btn {
-  border-radius: 8px;
-  padding: 5px 10px;
-  background-color: alpha(@base02, 0.5);
-  margin-top: 8px;
-}
-
-.panel-action-btn:hover {
-  background-color: alpha(@base03, 0.6);
-}
-
-.panel-action-btn-small {
-  border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 11px;
-  background-color: alpha(@base02, 0.5);
-}
-
-.panel-action-btn-small:hover {
-  background-color: alpha(@base08, 0.25);
-}
-
-/* Notification panel */
-.notif-panel {
-  min-width: 280px;
-}
-
-.notif-scroll {
-  min-height: 60px;
-}
-
-.notif-item {
-  background-color: alpha(@base02, 0.4);
-  border-radius: 8px;
-  padding: 6px 8px;
-  margin: 2px 0;
-}
-
-.notif-app {
-  color: @base0D;
-  font-size: 11px;
-}
-
-.notif-summary {
-  font-weight: bold;
-  margin-top: 2px;
-}
-
-.notif-body {
-  color: @base04;
-  font-size: 11px;
-  margin-top: 2px;
-}
-
-.notif-dismiss {
-  color: @base03;
-  padding: 0 4px;
-  border-radius: 4px;
-}
-
-.notif-dismiss:hover {
-  background-color: alpha(@base08, 0.3);
-  color: @base08;
-}
-
-/* Bluetooth panel */
-.bt-device {
-  border-radius: 8px;
-  padding: 5px 8px;
-  background-color: alpha(@base02, 0.3);
-  margin: 2px 0;
-}
-
-.bt-device.connected {
-  background-color: alpha(@base0D, 0.15);
-}
-
-.bt-connect-btn {
-  border-radius: 6px;
-  padding: 2px 8px;
-  font-size: 11px;
-  background-color: alpha(@base02, 0.6);
-}
-
-.bt-connect-btn:hover {
-  background-color: alpha(@base0D, 0.3);
-}
-
-/* Calendar panel */
-.calendar-panel {
-  min-width: 260px;
-}
-
-/* Weather panel */
-.weather-panel {
-  min-width: 240px;
-}
-
-.weather-big-icon {
-  min-width: 72px;
-  min-height: 72px;
-}
-
-.weather-temp-big {
-  font-size: 28px;
-  font-weight: bold;
-  color: @base05;
-}
-
-.weather-feels {
-  color: @base04;
-  font-size: 11px;
-}
-
-.weather-details {
+.panel-slider {
   margin: 4px 0;
 }
 
-.weather-detail-key {
-  color: @base03;
-  font-size: 11px;
+.panel-slider trough {
+  background: alpha(@nord4, 0.12);
+  border-radius: 4px;
+  min-height: 6px;
 }
 
-.weather-detail-val {
-  color: @base05;
-  font-size: 13px;
-  font-weight: bold;
+.panel-slider highlight {
+  background: @nord8;
+  border-radius: 4px;
 }
 
-.weather-day {
-  padding: 3px 0;
-}
-
-.weather-day-name {
-  color: @base05;
-  min-width: 56px;
-}
-
-.weather-day-temps {
-  color: @base04;
-  min-width: 72px;
-}
-
-.weather-day-precip {
-  color: @base0D;
-  font-size: 11px;
-  min-width: 30px;
-}
-
-/* Click-catcher: transparent full-screen overlay */
-.click-catcher {
-  background: none;
-}
-
-/* Notification popups */
-window.NotificationPopups {
-  background: none;
-}
-
-.popup-container {
-  padding: 0;
-}
-
-.popup-item {
-  background-color: alpha(@base01, 0.7);
-  border: 1px solid alpha(@base06, 0.12);
-  border-top: 1px solid alpha(@base06, 0.24);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 4px;
-  min-width: 280px;
-}
-
-.panel-clock-large {
-  font-size: 30px;
-  font-weight: bold;
-  color: @base05;
-}
-
-.panel-date {
-  color: @base04;
-  font-size: 12px;
-  margin-bottom: 4px;
-}
-
-/* Calendar */
-.cal-month-label {
-  color: @base05;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.cal-header {
-  color: @base03;
-  font-size: 11px;
-  padding: 2px 0;
-}
-
-.cal-day {
+.panel-slider slider {
+  background: @nord6;
   border-radius: 50%;
-  min-width: 34px;
-  min-height: 34px;
-  padding: 0;
-  background: none;
-  color: @base05;
+  min-width: 16px;
+  min-height: 16px;
+  box-shadow: 0 2px 8px alpha(@nord0, 0.4);
 }
 
-.cal-day:hover {
-  background-color: alpha(@base03, 0.4);
-}
-
-.cal-day.today {
-  background-color: @base0D;
-  color: @base00;
-  font-weight: bold;
-}
-
-.cal-day.dim {
-  color: @base03;
-}
-
-.powermenu-box button {
-  padding: 8px 20px;
-  margin: 3px 2px;
+.panel-button {
   border-radius: 8px;
-  background-color: alpha(@base02, 0.5);
-  min-width: 90px;
+  padding: 8px 12px;
+  background: alpha(@nord4, 0.08);
+  transition: background 200ms ease;
 }
 
-.powermenu-box button:hover {
-  background-color: @base02;
+.panel-button:hover {
+  background: alpha(@nord4, 0.15);
 }
 
-.powermenu-box .shutdown:hover   { background-color: alpha(@base08, 0.3); }
-.powermenu-box .reboot:hover    { background-color: alpha(@base0A, 0.3); }
-.powermenu-box .logout:hover    { background-color: alpha(@base0D, 0.3); }
-.powermenu-box .hibernate:hover { background-color: alpha(@base0E, 0.3); }
+/* ============================
+   Notifications (popups + panel)
+   ============================ */
+.notification-popup {
+  background: @glass-bg;
+  border: 1px solid @glass-border;
+  border-left: 3px solid @nord8;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px @glass-shadow;
+  margin: 8px 12px;
+  padding: 12px;
+  min-width: 340px;
+}
 
-/* Volume/Mic OSD — vertical slider at right-center */
+.notification-popup.critical {
+  border-left-color: @nord11;
+}
+
+.notification-app-icon {
+  margin-right: 8px;
+}
+
+.notification-summary {
+  font-weight: 700;
+  font-size: 13px;
+  color: @nord6;
+}
+
+.notification-body {
+  font-size: 12px;
+  color: alpha(@nord4, 0.8);
+  margin-top: 2px;
+}
+
+.notification-time {
+  font-size: 10px;
+  color: alpha(@nord4, 0.5);
+  margin-top: 4px;
+}
+
+.notification-close {
+  border-radius: 50%;
+  min-width: 24px;
+  min-height: 24px;
+  background: alpha(@nord4, 0.1);
+}
+
+.notification-close:hover {
+  background: alpha(@nord11, 0.3);
+}
+
+.notification-panel-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+.notification-panel-item:hover {
+  background: alpha(@nord4, 0.08);
+}
+
+/* ============================
+   Calendar
+   ============================ */
+.calendar-box {
+  background: @glass-bg;
+  border: 1px solid @glass-border;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px @glass-shadow;
+  margin: 12px;
+  padding: 20px;
+  min-width: 320px;
+}
+
+.calendar-header {
+  font-size: 16px;
+  font-weight: 700;
+  color: @nord6;
+  margin-bottom: 12px;
+}
+
+.calendar-grid {
+  /* GTK4 Gtk.Grid with uniform spacing */
+}
+
+.calendar-day {
+  border-radius: 50%;
+  min-width: 32px;
+  min-height: 32px;
+  font-size: 12px;
+}
+
+.calendar-day:hover {
+  background: alpha(@nord4, 0.1);
+}
+
+.calendar-day.today {
+  background: @nord8;
+  color: @nord0;
+  font-weight: 700;
+}
+
+.calendar-day.other-month {
+  color: alpha(@nord4, 0.3);
+}
+
+.calendar-day-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: alpha(@nord4, 0.5);
+}
+
+.calendar-clock {
+  font-size: 40px;
+  font-weight: 300;
+  color: @nord6;
+  margin-bottom: 16px;
+}
+
+/* ============================
+   Weather
+   ============================ */
+.weather-box {
+  background: @glass-bg;
+  border: 1px solid @glass-border;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px @glass-shadow;
+  margin: 12px;
+  padding: 20px;
+  min-width: 360px;
+}
+
+.weather-current {
+  margin-bottom: 16px;
+}
+
+.weather-current-temp {
+  font-size: 48px;
+  font-weight: 300;
+  color: @nord6;
+}
+
+.weather-current-desc {
+  font-size: 14px;
+  color: alpha(@nord4, 0.7);
+}
+
+.weather-forecast {
+  margin-top: 12px;
+}
+
+.weather-forecast-day {
+  padding: 6px 0;
+}
+
+.weather-forecast-icon {
+  margin-right: 8px;
+}
+
+.weather-forecast-temp {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.weather-forecast-low {
+  color: alpha(@nord4, 0.5);
+  margin-left: 4px;
+}
+
+/* ============================
+   OSD
+   ============================ */
 .osd-box {
-  background-color: alpha(@base01, 0.55);
-  border: 1px solid alpha(@base06, 0.1);
-  border-left: 1px solid alpha(@base06, 0.22);
-  border-radius: 10px;
-  padding: 10px 6px;
+  background: @glass-bg;
+  border: 1px solid @glass-border;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px @glass-shadow;
+  padding: 16px 24px;
+  margin-bottom: 40px;
 }
 
-.osd-box icon {
-  color: @base04;
-  margin-bottom: 6px;
+.osd-icon {
+  margin-right: 12px;
 }
 
 .osd-slider {
-  min-width: 32px;
-  min-height: 100px;
+  min-width: 200px;
 }
 
 .osd-slider trough {
-  background-color: alpha(@base02, 0.5);
-  border-radius: 6px;
-  min-width: 6px;
+  background: alpha(@nord4, 0.12);
+  border-radius: 4px;
+  min-height: 6px;
 }
 
-.osd-slider trough highlight {
-  background-color: @base0D;
-  border-radius: 6px;
+.osd-slider highlight {
+  background: @nord8;
+  border-radius: 4px;
 }
 
 .osd-slider slider {
-  background-color: @base05;
+  background: @nord6;
   border-radius: 50%;
-  min-width: 14px;
-  min-height: 14px;
+  min-width: 18px;
+  min-height: 18px;
 }
 
-.osd-value {
-  color: @base0D;
-  font-weight: bold;
-  font-size: 12px;
+.osd-label {
+  font-weight: 700;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 40px;
+}
+
+/* ============================
+   Power Menu
+   ============================ */
+.powermenu-box {
+  background: @glass-bg;
+  border: 1px solid @glass-border;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px @glass-shadow;
+  padding: 28px;
+  min-width: 300px;
+}
+
+.powermenu-header {
+  font-size: 20px;
+  font-weight: 300;
+  color: @nord6;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.powermenu-button {
+  border-radius: 12px;
+  padding: 14px;
+  background: alpha(@nord4, 0.06);
+  transition: background 200ms ease;
+  min-width: 64px;
+}
+
+.powermenu-button:hover {
+  background: alpha(@nord4, 0.12);
+}
+
+.powermenu-button.shutdown:hover {
+  background: alpha(@nord11, 0.2);
+}
+
+.powermenu-button.reboot:hover {
+  background: alpha(@nord12, 0.2);
+}
+
+.powermenu-button.logout:hover {
+  background: alpha(@nord13, 0.2);
+}
+
+.powermenu-button.hibernate:hover {
+  background: alpha(@nord7, 0.2);
+}
+
+.powermenu-label {
+  font-size: 11px;
+  font-weight: 600;
   margin-top: 6px;
+  color: alpha(@nord4, 0.7);
+}
+
+/* ============================
+   Click Catcher
+   ============================ */
+.click-catcher {
+  background: transparent;
+}
+
+/* ============================
+   Indicators
+   ============================ */
+.bar-indicator {
+  padding: 0 3px;
+}
+
+.bar-indicator label {
+  font-size: 11px;
+  color: alpha(@nord4, 0.6);
 }
