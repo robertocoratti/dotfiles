@@ -1,5 +1,5 @@
 import { createBinding } from "ags";
-import Wp from "gi://AstalWireplumber";
+import Wp from "gi://AstalWp";
 import Network from "gi://AstalNetwork";
 import Bluetooth from "gi://AstalBluetooth";
 import Box from "../../components/Box";

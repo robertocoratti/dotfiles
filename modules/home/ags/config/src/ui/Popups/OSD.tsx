@@ -1,6 +1,6 @@
 import { createBinding } from "ags";
 import { Astal, Gdk } from "ags/gtk4";
-import Wp from "gi://AstalWireplumber";
+import Wp from "gi://AstalWp";
 import Box from "../../components/Box";
 import Icon from "../../components/Icon";
 import Text from "../../components/Text";
