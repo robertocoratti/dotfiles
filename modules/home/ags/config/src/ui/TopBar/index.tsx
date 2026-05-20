@@ -84,7 +84,6 @@ export default function TopBar({ monitor, index }: TopBarProps) {
           Astal.WindowAnchor.LEFT
         }
         exclusivity={Astal.Exclusivity.IGNORE}
-        clickThrough={!panel}
         keymode={panel ? Astal.Keymode.EXCLUSIVE : Astal.Keymode.NONE}
         visible={panel !== null}
         cssClasses={["click-catcher"]}

@@ -49,7 +49,6 @@ export default function OSD({ monitor }: OSDProps) {
           Astal.WindowAnchor.RIGHT
         }
         exclusivity={Astal.Exclusivity.IGNORE}
-        clickThrough={true}
         keymode={Astal.Keymode.NONE}
         visible={speakerVisible}
       >
@@ -77,7 +76,6 @@ export default function OSD({ monitor }: OSDProps) {
           Astal.WindowAnchor.RIGHT
         }
         exclusivity={Astal.Exclusivity.IGNORE}
-        clickThrough={true}
         keymode={Astal.Keymode.NONE}
         visible={micVisible}
       >

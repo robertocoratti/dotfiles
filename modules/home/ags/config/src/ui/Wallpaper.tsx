@@ -20,7 +20,6 @@ export default function Wallpaper({ monitor }: WallpaperProps) {
         Astal.WindowAnchor.LEFT
       }
       exclusivity={Astal.Exclusivity.IGNORE}
-      clickThrough={true}
       visible={true}
     >
       <image file={path} cssClasses={["wallpaper-img"]} />

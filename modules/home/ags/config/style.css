@@ -460,7 +460,6 @@ window {
   font-weight: 300;
   color: @nord6;
   margin-bottom: 24px;
-  text-align: center;
 }
 
 .powermenu-button {

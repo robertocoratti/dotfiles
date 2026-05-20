@@ -35,7 +35,6 @@ export default function Modal({
         Astal.WindowAnchor.LEFT
       }
       exclusivity={Astal.Exclusivity.IGNORE}
-      clickThrough={!open}
       keymode={open ? Astal.Keymode.EXCLUSIVE : Astal.Keymode.NONE}
       visible={open}
       cssClasses={className ? [className] : []}

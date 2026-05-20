@@ -17,7 +17,6 @@ export default function ScreenCorners({ monitor }: ScreenCornersProps) {
         Astal.WindowAnchor.LEFT
       }
       exclusivity={Astal.Exclusivity.IGNORE}
-      clickThrough={true}
       visible={true}
       cssClasses={["screen-corners"]}
     >

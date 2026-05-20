@@ -24,7 +24,6 @@ export default function NotificationPopups({
         Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT
       }
       exclusivity={Astal.Exclusivity.IGNORE}
-      clickThrough={true}
       keymode={Astal.Keymode.NONE}
       visible={true}
     >
