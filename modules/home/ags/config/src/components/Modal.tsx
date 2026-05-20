@@ -41,11 +41,6 @@ export default function Modal({
       halign={halign}
       valign={valign}
       widthRequest={widthRequest}
-      onKeyPressed={(self: Gtk.Widget, keyval: number) => {
-        if (keyval === Gdk.KEY_Escape) {
-          onClose();
-        }
-      }}
     >
       {children}
     </window>

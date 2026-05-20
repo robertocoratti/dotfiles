@@ -42,11 +42,6 @@ export default function TopBar({ monitor, index }: TopBarProps) {
         visible={true}
         heightRequest={42}
         cssClasses={["bar-bg"]}
-        onKeyPressed={(self: Gtk.Widget, keyval: number) => {
-          if (keyval === Gdk.KEY_Escape) {
-            closeActivePanel();
-          }
-        }}
       >
         <CenterBox
           class="bar-inner"
@@ -88,16 +83,12 @@ export default function TopBar({ monitor, index }: TopBarProps) {
         keymode={panel ? Astal.Keymode.EXCLUSIVE : Astal.Keymode.NONE}
         visible={panel !== null}
         cssClasses={["click-catcher"]}
-        onKeyPressed={(self: Gtk.Widget, keyval: number) => {
-          if (keyval === Gdk.KEY_Escape) {
-            closeActivePanel();
-          }
-        }}
       >
         <box
           onClicked={() => closeActivePanel()}
           cssClasses={["click-catcher"]}
-          expand
+          hexpand
+          vexpand
         >
           <box />
         </box>
