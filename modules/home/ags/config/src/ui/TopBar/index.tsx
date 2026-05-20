@@ -40,6 +40,7 @@ export default function TopBar({ monitor, index }: TopBarProps) {
         }
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         visible={true}
+        heightRequest={42}
         cssClasses={["bar-bg"]}
         onKeyPressed={(self: Gtk.Widget, keyval: number) => {
           if (keyval === Gdk.KEY_Escape) {

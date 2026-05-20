@@ -14,7 +14,7 @@ const network = Network.get_default();
 const bluetooth = Bluetooth.get_default();
 
 const cpuPoll = createPoll(2000, () => {
-  const idle = Number(exec("cat /proc/stat | head -1 | awk '{print $5}'"));
+  const idle = Number(exec("awk 'NR==1 {print $5}' /proc/stat"));
   return idle;
 });
 
@@ -23,9 +23,9 @@ let prevTotal = 0;
 
 const cpuPercent = cpuPoll(() => {
   const idle = cpuPoll.get();
-  const line = exec("cat /proc/stat | head -1");
+  const line = exec("head -1 /proc/stat");
   const values = line
-    .split(" ")
+    .split(/\s+/)
     .slice(2)
     .map(Number)
     .filter((n) => !isNaN(n));
@@ -47,7 +47,7 @@ const cpuPercent = cpuPoll(() => {
 });
 
 const ramPercent = createPoll(2000, () => {
-  const mem = exec("free -b | grep Mem");
+  const mem = exec("awk '/^Mem/ {print $2,$3}' /proc/meminfo");
   const parts = mem.split(/\s+/);
   const total = Number(parts[1]);
   const used = Number(parts[2]);

@@ -10,7 +10,7 @@ import { togglePanel } from "../../lib/state";
 const weatherData = createPoll(600, async () => {
   try {
     const keyFile = "/var/lib/sopsjson/secrets.json";
-    const raw = await execAsync(["cat", keyFile]);
+    const raw = await execAsync(`cat ${keyFile}`);
     const secrets = JSON.parse(raw);
     const key = secrets.weather_api_key;
 
@@ -18,7 +18,7 @@ const weatherData = createPoll(600, async () => {
     const lon = 9.19;
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
 
-    const res = await execAsync(["curl", "-s", url]);
+    const res = await execAsync(`curl -s "${url}"`);
     const data = JSON.parse(res);
 
     return {
