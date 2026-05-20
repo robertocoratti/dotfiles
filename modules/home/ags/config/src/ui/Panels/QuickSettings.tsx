@@ -104,7 +104,7 @@ export default function QuickSettings() {
               bluetooth.isPowered ? "Bluetooth On" : "Bluetooth Off"
             }
           />
-          {bluetooth.bind("devices").as((devices) =>
+          {createBinding(bluetooth, "devices").as((devices: any[]) =>
             devices
               .filter((d) => d.connected)
               .map((d) => (

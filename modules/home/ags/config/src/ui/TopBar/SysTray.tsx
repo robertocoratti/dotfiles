@@ -8,7 +8,7 @@ const tray = Tray.get_default();
 export default function SysTray() {
   return (
     <Box class="bar-tray">
-      {tray.bind("items").as((items) =>
+      {createBinding(tray, "items").as((items: any[]) =>
         items.map((item) => (
           <Button
             tooltipText={createBinding(item, "tooltipMarkup")}

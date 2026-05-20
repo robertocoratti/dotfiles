@@ -1,3 +1,4 @@
+import { createBinding } from "ags";
 import { Gtk, Gdk } from "ags/gtk4";
 import Hyprland from "gi://AstalHyprland";
 import Box from "../../components/Box";
@@ -78,7 +79,7 @@ interface WorkspacesProps {
 export default function Workspaces({ monitor }: WorkspacesProps) {
   return (
     <Box class="bar-ws" gap={4}>
-      {hyprland.bind("workspaces").as((workspaces) =>
+      {createBinding(hyprland, "workspaces").as((workspaces: any[]) =>
         workspaces
           .filter((ws) => ws.monitor?.name === monitor.connector)
           .sort((a, b) => a.id - b.id)

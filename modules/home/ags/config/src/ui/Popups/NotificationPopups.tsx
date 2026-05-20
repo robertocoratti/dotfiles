@@ -1,3 +1,4 @@
+import { createBinding } from "ags";
 import { Astal, Gdk } from "ags/gtk4";
 import Notifd from "gi://AstalNotifd";
 import GLib from "gi://GLib?version=2.0";
@@ -28,7 +29,7 @@ export default function NotificationPopups({
       visible={true}
     >
       <Box vertical gap={4}>
-        {notifd.bind("notifications").as((notifications) =>
+        {createBinding(notifd, "notifications").as((notifications: any[]) =>
           notifications
             .filter((n) => !n.dismissed)
             .slice(0, 3)
