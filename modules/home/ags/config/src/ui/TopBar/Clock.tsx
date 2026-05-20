@@ -20,8 +20,8 @@ export default function Clock() {
 
   return (
     <Box class="bar-clock" gap={6}>
-      <Text class="bar-clock-date" children={time(() => time.get().date)} />
-      <Text children={time(() => time.get().time)} />
+      <Text class="bar-clock-date" children={time.as((t) => t?.date || "")} />
+      <Text children={time.as((t) => t?.time || "")} />
     </Box>
   );
 }

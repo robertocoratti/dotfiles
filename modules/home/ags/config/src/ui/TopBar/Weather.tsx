@@ -41,17 +41,21 @@ function getWeatherIcon(code: number): string {
 }
 
 export default function Weather() {
-  const binding = weatherData(() => weatherData.get());
-
   return (
     <Button
       class="bar-weather"
       onClicked={() => togglePanel("weather")}
-      tooltipText={weatherData.get().desc}
+      tooltipText={weatherData.as((d) => d?.desc || "N/A")}
     >
       <Box gap={4}>
-        <Icon icon={binding.icon} size={16} />
-        <Text class="bar-weather-temp" children={`${binding.temp}°`} />
+        <Icon
+          icon={weatherData.as((d) => d?.icon || icons.weather.cloudy)}
+          size={16}
+        />
+        <Text
+          class="bar-weather-temp"
+          children={weatherData.as((d) => d ? `${d.temp}°` : "--°")}
+        />
       </Box>
     </Button>
   );
