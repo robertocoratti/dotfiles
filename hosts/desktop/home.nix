@@ -13,17 +13,12 @@
 
   modules = {
     claudeCode.enable = true;
-    fuzzel.enable = true;
     git.enable = true;
     helix.enable = true;
     hyprland.enable = true;
-    ags.enable = true;
+    noctalia.enable = true;
     icons.enable = true;
     kitty.enable = true;
-    lock = {
-      enable = true;
-      idleTimeout = 600;
-    };
     packages.enable = true;
     screenshot.enable = true;
     shell.enable = true;

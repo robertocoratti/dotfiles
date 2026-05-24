@@ -19,6 +19,7 @@
     ./nh
     ./notifications
     ./polkit
+    ./power
     ./shell
     ./sops
     ./sound
@@ -51,6 +52,8 @@
     sound.enable = lib.mkDefault true;
 
     polkit.enable = lib.mkDefault true;
+
+    power.enable = lib.mkDefault true;
 
     sops.enable = lib.mkDefault true;
 

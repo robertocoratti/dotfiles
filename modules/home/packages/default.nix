@@ -85,7 +85,6 @@ in {
           write-auto-subs = false;
         };
       };
-
     };
   };
 }

@@ -14,13 +14,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    
     sops = {
       defaultSopsFile = ../../../secrets/secrets.json;
       defaultSopsFormat = "json";
 
       age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
-    
+
       secrets = {
         weather_api_key = {
           owner = "sopsjson";
@@ -51,7 +50,7 @@ in {
         group = "sopsjson";
       };
 
-      groups.sopsjson = { };
+      groups.sopsjson = {};
     };
   };
 }

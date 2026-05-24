@@ -7,14 +7,12 @@
 }: {
   imports = [
     ./claude-code
-    ./fuzzel
     ./git
     ./helix
     ./hyprland
-    ./ags
+    ./noctalia
     ./icons
     ./kitty
-    ./lock
     ./packages
     ./screenshot
     ./shell

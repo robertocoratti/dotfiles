@@ -29,9 +29,9 @@ in {
 
         exec-once =
           [
-            "hypridle"
             "wl-paste --type text --watch cliphist store"
             "wl-paste --type image --watch cliphist store"
+            "noctalia-shell"
           ]
           ++ lib.optionals waybarEnabled ["waybar"];
 
@@ -91,32 +91,26 @@ in {
 
         layerrule = [
           {
-            name = "blur-bar";
-            "match:namespace" = "bar";
+            name = "blur-noctalia-bar";
+            "match:namespace" = "noctalia-bar.*";
             blur = true;
             blur_popups = true;
           }
           {
-            name = "blur-powermenu";
-            "match:namespace" = "powermenu";
+            name = "blur-noctalia-dock";
+            "match:namespace" = "noctalia-dock";
             blur = true;
             blur_popups = true;
           }
           {
-            name = "blur-launcher";
-            "match:namespace" = "launcher";
+            name = "blur-noctalia-panel";
+            "match:namespace" = "noctalia-panel";
             blur = true;
             blur_popups = true;
           }
           {
-            name = "blur-panel";
-            "match:namespace" = "panel";
-            blur = true;
-            blur_popups = true;
-          }
-          {
-            name = "blur-notifications";
-            "match:namespace" = "notifications";
+            name = "blur-noctalia-notification";
+            "match:namespace" = "noctalia-notification";
             blur = true;
             blur_popups = true;
           }
@@ -167,14 +161,14 @@ in {
             "$mod SHIFT, S, exec, grimblast --notify copy area"
             "$mod, Print, exec, grimblast --notify save screen"
             # clipboard
-            "$mod SHIFT, V, exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
+            "$mod SHIFT, V, exec, noctalia-shell ipc call panel-toggle clipboard"
             # lock
-            "$mod, L, exec, hyprlock"
+            "$mod, L, exec, noctalia-shell ipc call lock"
             # apps
             "$mod, RETURN, exec, $terminal"
             "$mod, E, exec, $fileManager"
             "$mod, B, exec, $browser"
-            "$mod, D, exec, fuzzel"
+            "$mod, D, exec, noctalia-shell ipc call panel-toggle launcher"
             "$mod, T, exec, $terminal -e btop"
             "$mod, C, exec, vesktop"
             "$mod, V, exec, code"
