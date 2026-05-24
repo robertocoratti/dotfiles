@@ -85,7 +85,7 @@ in {
             enabled = true;
             range = 20;
             render_power = 2;
-            color = "rgba(1a1a1aee)";
+            color = lib.mkForce "rgba(1a1a1aee)";
             offset = "0 4";
           };
         };
