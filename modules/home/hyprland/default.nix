@@ -1,6 +1,5 @@
 {
   inputs,
-  host,
   pkgs,
   osConfig,
   lib,
@@ -21,6 +20,7 @@ in {
       systemd.enable = true;
 
       settings = {
+        "$ipc" = "noctalia-shell ipc call";
         "$mod" = "SUPER";
         "$terminal" = "kitty";
         "$fileManager" = "nautilus";
@@ -64,8 +64,8 @@ in {
           rounding = 16;
           rounding_power = 2;
 
-          active_opacity = 0.92;
-          inactive_opacity = 0.80;
+          active_opacity = 1.00;
+          inactive_opacity = 0.85;
 
           blur = {
             enabled = true;
@@ -85,32 +85,16 @@ in {
             enabled = true;
             range = 20;
             render_power = 2;
+            color = "rgba(1a1a1aee)";
             offset = "0 4";
           };
         };
 
         layerrule = [
           {
-            name = "blur-noctalia-bar";
-            "match:namespace" = "noctalia-bar.*";
-            blur = true;
-            blur_popups = true;
-          }
-          {
-            name = "blur-noctalia-dock";
-            "match:namespace" = "noctalia-dock";
-            blur = true;
-            blur_popups = true;
-          }
-          {
-            name = "blur-noctalia-panel";
-            "match:namespace" = "noctalia-panel";
-            blur = true;
-            blur_popups = true;
-          }
-          {
-            name = "blur-noctalia-notification";
-            "match:namespace" = "noctalia-notification";
+            name = "noctalia";
+            "match:namespace" = "noctalia-background-.*$";
+            ignore_alpha = 0.5;
             blur = true;
             blur_popups = true;
           }
@@ -147,32 +131,36 @@ in {
             "$mod, mouse_down, workspace, e+1"
             "$mod, mouse_up, workspace, e-1"
             # media
-            ",XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +2%"
-            ",XF86AudioLowerVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ -2%"
-            ",XF86AudioMute,exec,pactl set-sink-mute @DEFAULT_SINK@ toggle"
-            ",XF86AudioMicMute,exec,pactl set-source-mute @DEFAULT_SINK@ toggle"
-            ",XF86AudioPlay,exec,playerctl play-pause"
-            ",XF86AudioPause,exec,playerctl play-pause"
-            ",XF86AudioPrev,exec,playerctl previous"
-            ",XF86AudioNext,exec,playerctl next"
-            ",PAUSE,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+            ", XF86AudioRaiseVolume, exec, $ipc volume increase"
+            ", XF86AudioLowerVolume, exec, $ipc volume decrease"
+            ", XF86AudioMute, exec, $ipc volume muteOutput"
+            ", XF86AudioMicMute, exec, $ipc volume muteInput"
+            ", XF86AudioPlay, exec, $ipc media play-pause"
+            ", XF86AudioPause, exec, $ipc media play-pause"
+            ", XF86AudioPrev, exec, $ipc media previous"
+            ", XF86AudioNext, exec, $ipc media next"
+            ", XF86MonBrightnessUp, exec, $ipc brightness increase"
+            ", XF86MonBrightnessDown, exec, $ipc brightness decrease"
+            ", PAUSE, exec, $ipc volume muteInput"
             # screenshot
             ", Print, exec, grimblast --notify copy area"
             "$mod SHIFT, S, exec, grimblast --notify copy area"
             "$mod, Print, exec, grimblast --notify save screen"
             # clipboard
-            "$mod SHIFT, V, exec, noctalia-shell ipc call panel-toggle clipboard"
+            "$mod SHIFT, V, exec, $ipc panel-toggle clipboard"
             # lock
-            "$mod, L, exec, noctalia-shell ipc call lock"
+            "$mod, L, exec, $ipc lock"
             # apps
             "$mod, RETURN, exec, $terminal"
+            "$mod, comma, exec, $ipc settings toggle"
+            "$mod, S, exec, $ipc controlCenter toggle"
+            "$mod, period, exec, $ipc launcher emoji"
             "$mod, E, exec, $fileManager"
             "$mod, B, exec, $browser"
-            "$mod, D, exec, noctalia-shell ipc call panel-toggle launcher"
+            "$mod, D, exec, $ipc launcher toggle"
             "$mod, T, exec, $terminal -e btop"
             "$mod, C, exec, vesktop"
             "$mod, V, exec, code"
-            "$mod, H, exec, $terminal -e hx"
             "$mod, M, exec, spotify"
             "$mod, O, exec, obsidian"
             # webapps

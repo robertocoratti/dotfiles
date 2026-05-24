@@ -1,8 +1,6 @@
 {
   inputs,
-  user,
-  language,
-  timeZone,
+  hostInfo,
   pkgs,
   lib,
   config,
@@ -12,6 +10,7 @@
     ./ai
     ./bluetooth
     ./greetd
+    ./host
     ./i18n
     ./keyboard
     ./keyring
@@ -35,7 +34,7 @@
 
     i18n = {
       enable = lib.mkDefault true;
-      language = language;
+      language = config.modules.host.language;
     };
 
     keyring.enable = lib.mkDefault true;
@@ -55,12 +54,12 @@
 
     power.enable = lib.mkDefault true;
 
-    sops.enable = lib.mkDefault true;
-
     shell = {
       enable = lib.mkDefault true;
       fish.enable = lib.mkDefault true;
     };
+
+    sops.enable = lib.mkDefault true;
 
     stylix.enable = lib.mkDefault true;
   };
@@ -109,10 +108,13 @@
     sops
   ];
 
-  users.users.${user} = {
+  users.mutableUsers = false;
+
+  users.users.${hostInfo.user} = {
     isNormalUser = true;
     uid = 1000;
-    description = "${user}";
+    description = "${hostInfo.user}";
+    hashedPasswordFile = config.sops.secrets.user-password.path;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -123,7 +125,7 @@
 
   time = {
     hardwareClockInLocalTime = true;
-    timeZone = timeZone;
+    timeZone = config.modules.host.timeZone;
   };
 
   services = {

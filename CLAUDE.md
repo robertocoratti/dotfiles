@@ -22,6 +22,7 @@ git add <path>        # required or Nix will error: "path is not tracked by Git"
 ```
 flake.nix                       # inputs + single nixosConfigurations.desktop output
 hosts/desktop/
+  default.nix                   # host metadata: user, language, timeZone, type, host
   configuration.nix             # system entry point: imports home-manager + modules/system
   home.nix                      # home-manager entry point: enables home modules
   hardware-configuration.nix    # hardware + desktop-specific boot params (AMD GPU, monitors)
@@ -30,8 +31,6 @@ modules/
     default.nix                 # imports all system modules + sets defaults with lib.mkDefault
   home/                         # home-manager modules (user programs, dotfiles)
     default.nix                 # imports all home modules + nixpkgs.config
-secrets/
-  secrets.json                  # sops-encrypted secrets (age key at ~/.config/sops/age/keys.txt)
 ```
 
 ### Module pattern
@@ -54,20 +53,36 @@ in {
 - Home modules are enabled in `hosts/desktop/home.nix`
 - camelCase for multi-word option names (e.g. `modules.claudeCode`, `modules.shellEnhancements`)
 
+### Host metadata
+
+Each host defines `hosts/<name>/default.nix` exporting raw metadata:
+```nix
+{ host, user, system, language, timeZone, type }
+```
+`user` and `system` are passed through `hostInfo` specialArg for early use (`users.users`, `nixpkgs.hostPlatform`).
+
+A typed module at `modules/system/host/default.nix` defines `options.modules.host` with validated types:
+```nix
+options.modules.host = {
+  name = lib.types.str;           # "desktop"
+  type = lib.types.enum ["desktop" "laptop"];
+  language = lib.types.str;
+  timeZone = lib.types.str;
+};
+```
+
+The host's `configuration.nix` maps `hostInfo` fields to `modules.host.*`. All other modules read from `config.modules.host.*` (NixOS) or `osConfig.modules.host.*` (home-manager).
+
 ### Key special args
 
-Passed to all NixOS modules via `specialArgs`: `user`, `host`, `language`, `timeZone`, `inputs`, `system`.  
-Passed to home-manager modules via `extraSpecialArgs`: `user`, `inputs`.
+Passed to all NixOS modules via `specialArgs`: `inputs`, `hostInfo`.  
+Passed to home-manager modules via `extraSpecialArgs`: `inputs`, `hostInfo`.
 
 ### Theming
 
 Stylix (`inputs.stylix`) manages colors, fonts, wallpaper, cursor, and opacity for all supported programs (bat, hyprlock, gtk, kitty, etc.). **Do not set theme-related options that Stylix already controls** — this causes "defined multiple times" errors. Current scheme: `tokyo-night-dark` (base16), dark polarity, Monaspace Nerd Font monospace, Bibata-Modern-Classic cursor.
 
 The exception is `targets.plymouth.enable = false` in `modules/system/stylix/default.nix` — Plymouth theme is managed manually (`boot.plymouth.theme`).
-
-### Secrets (sops-nix)
-
-Secrets are encrypted in `secrets/secrets.json` with age. The `modules/system/sops` module decrypts them at boot and writes a JSON file to `/var/lib/sopsjson/secrets.json` via a dedicated system user, making secrets available to services that need them (e.g. `weather_api_key`).
 
 ### AI stack
 

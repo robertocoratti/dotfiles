@@ -1,56 +1,27 @@
 {
-  inputs,
-  pkgs,
-  lib,
-  user,
+  hostInfo,
   config,
+  lib,
   ...
 }: let
   cfg = config.modules.sops;
 in {
   options.modules.sops = {
-    enable = lib.mkEnableOption "Enable SOPS";
-    # options
+    enable = lib.mkEnableOption "Enable SOPS secrets management";
   };
 
   config = lib.mkIf cfg.enable {
     sops = {
-      defaultSopsFile = ../../../secrets/secrets.json;
-      defaultSopsFormat = "json";
+      defaultSopsFile = ../../../secrets/secrets.yaml;
+      defaultSopsFormat = "yaml";
 
-      age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
+      age.keyFile = "/home/${hostInfo.user}/.config/sops/age/keys.txt";
 
       secrets = {
-        weather_api_key = {
-          owner = "sopsjson";
+        user-password = {
+          neededForUsers = true;
         };
       };
-    };
-
-    systemd.services."sopsjson" = {
-      script = ''
-        echo "
-        {
-          \"weather_api_key\": \"$(cat ${config.sops.secrets.weather_api_key.path})\"
-        }
-        " > /var/lib/sopsjson/secrets.json
-      '';
-
-      serviceConfig = {
-        User = "sopsjson";
-        WorkingDirectory = "/var/lib/sopsjson";
-      };
-    };
-
-    users = {
-      users.sopsjson = {
-        home = "/var/lib/sopsjson";
-        createHome = true;
-        isSystemUser = true;
-        group = "sopsjson";
-      };
-
-      groups.sopsjson = {};
     };
   };
 }

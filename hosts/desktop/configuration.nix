@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  user,
+  hostInfo,
   inputs,
   ...
 }: {
@@ -12,12 +12,20 @@
   ];
 
   home-manager = {
-    extraSpecialArgs = {inherit user inputs;};
+    extraSpecialArgs = {inherit inputs hostInfo;};
     backupFileExtension = "backup";
-    users.${user} = import ./home.nix;
+    users.${hostInfo.user} = import ./home.nix;
   };
 
   modules = {
+    host = {
+      enable = true;
+      name = hostInfo.host;
+      type = hostInfo.type;
+      language = hostInfo.language;
+      timeZone = hostInfo.timeZone;
+    };
+
     keyboard = {
       layout = "us";
       variant = "altgr-intl";

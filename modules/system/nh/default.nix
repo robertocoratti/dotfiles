@@ -1,7 +1,7 @@
 {
   inputs,
   pkgs,
-  user,
+  hostInfo,
   lib,
   config,
   ...
@@ -16,7 +16,7 @@ in {
     programs.nh = {
       enable = true;
 
-      flake = "/home/${user}/.dotfiles";
+      flake = "/home/${hostInfo.user}/.dotfiles";
 
       clean = {
         enable = true;

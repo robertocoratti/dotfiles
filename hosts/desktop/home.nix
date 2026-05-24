@@ -2,14 +2,15 @@
   lib,
   inputs,
   config,
+  hostInfo,
   ...
 }: {
   imports = [
     ../../modules/home/default.nix
   ];
 
-  home.username = "korazza";
-  home.homeDirectory = "/home/korazza";
+  home.username = hostInfo.user;
+  home.homeDirectory = "/home/${hostInfo.user}";
 
   modules = {
     claudeCode.enable = true;

@@ -1,5 +1,5 @@
 {
-  user,
+  hostInfo,
   pkgs,
   lib,
   config,
@@ -17,7 +17,7 @@ in {
       settings = {
         default_session = {
           command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${pkgs.hyprland}/bin/start-hyprland";
-          user = "${user}";
+          user = "${hostInfo.user}";
         };
       };
     };

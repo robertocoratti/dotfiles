@@ -1,6 +1,5 @@
 {
   inputs,
-  host,
   pkgs,
   lib,
   config,
@@ -25,7 +24,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     networking = {
-      hostName = host;
+      hostName = config.modules.host.name;
       useDHCP = lib.mkDefault true;
       networkmanager.enable = true;
 
