@@ -46,7 +46,7 @@ in {
           layout = "dwindle";
 
           gaps_in = 8;
-          gaps_out = 16;
+          gaps_out = 12;
         };
 
         input = {
@@ -65,7 +65,7 @@ in {
           rounding_power = 2;
 
           active_opacity = 1.00;
-          inactive_opacity = 0.85;
+          inactive_opacity = 0.75;
 
           blur = {
             enabled = true;
@@ -74,8 +74,8 @@ in {
             ignore_opacity = true;
             noise = 0.02;
             contrast = 0.9;
-            brightness = 0.85;
-            vibrancy = 0.2;
+            brightness = 0.75;
+            vibrancy = 0.1696;
             vibrancy_darkness = 0.0;
             popups = true;
             special = true;
@@ -83,18 +83,24 @@ in {
 
           shadow = {
             enabled = true;
-            range = 20;
-            render_power = 2;
+            range = 4;
+            render_power = 3;
             color = lib.mkForce "rgba(1a1a1aee)";
-            offset = "0 4";
           };
         };
 
         layerrule = [
           {
-            name = "noctalia";
+            "name" = "noctalia";
             "match:namespace" = "noctalia-background-.*$";
-            ignore_alpha = 0.5;
+            ignore_alpha = 0.3;
+            blur = true;
+            blur_popups = true;
+          }
+          {
+            "name" = "noctalia-panels";
+            "match:namespace" = "noctalia-(bar|notifications|dock|panel|osd|launcher|overview|toast)-.*$";
+            ignore_alpha = 0.10;
             blur = true;
             blur_popups = true;
           }

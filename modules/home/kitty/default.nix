@@ -19,7 +19,7 @@ in {
         enable_audio_bell = false;
 
         window_margin_width = "0";
-        window_padding_width = "3 4";
+        window_padding_width = "4 4";
         window_border_width = "0";
 
         tab_bar_edge = "bottom";

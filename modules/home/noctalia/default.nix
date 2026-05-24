@@ -11,32 +11,39 @@
   stylixWallpaper = osConfig.stylix.image or null;
 
   mkWidget = id: {inherit id;};
+  mkLauncherWidget = id: {inherit id; useDistroLogo = true;};
+
   leftWidgets =
     [
-      (mkWidget "Launcher")
-      (mkWidget "Clock")
-      (mkWidget "SystemMonitor")
+      (mkLauncherWidget "Launcher")
+      (mkWidget "Workspace")
       (mkWidget "ActiveWindow")
       (mkWidget "MediaMini")
     ];
   centerWidgets = [
-    (mkWidget "Workspace")
+    (mkWidget "Clock")
+    (mkWidget "plugin:weather-indicator")
   ];
   rightWidgets =
     [
-      (mkWidget "Tray")
-      (mkWidget "NotificationHistory")
+      (mkWidget "Microphone")
+      (mkWidget "Volume")
+      (mkWidget "Network")
     ]
     ++ lib.optionals isLaptop [
       (mkWidget "Battery")
       (mkWidget "Brightness")
     ]
     ++ [
-      (mkWidget "Volume")
+      (mkWidget "SystemMonitor")
+      (mkWidget "plugin:screen-toolkit")
+      (mkWidget "Tray")
+      (mkWidget "NotificationHistory")
       (mkWidget "ControlCenter")
+      (mkWidget "SessionMenu")
     ];
 
-  wallpaperSettings = lib.mkIf (stylixWallpaper != null) {
+  wallpaperSettings = lib.optionalAttrs (stylixWallpaper != null) {
     defaultWallpaper = stylixWallpaper;
   };
 in {
@@ -64,18 +71,18 @@ in {
           density = "default";
           showOutline = false;
           showCapsule = true;
-          capsuleOpacity = 1;
+          capsuleOpacity = 0.75;
           capsuleColorKey = "none";
-          widgetSpacing = 6;
-          contentPadding = 2;
+          widgetSpacing = 8;
+          contentPadding = 4;
           fontScale = 1;
           enableExclusionZoneInset = true;
-          backgroundOpacity = 0.93;
+          backgroundOpacity = 0.35;
           useSeparateOpacity = false;
           marginVertical = 4;
           marginHorizontal = 4;
           frameThickness = 8;
-          frameRadius = 12;
+          frameRadius = 16;
           outerCorners = true;
           hideOnOverview = false;
           displayMode = "always_visible";
@@ -120,8 +127,8 @@ in {
           enableShadows = true;
           enableBlurBehind = true;
           shadowDirection = "bottom_right";
-          shadowOffsetX = 2;
-          shadowOffsetY = 3;
+          shadowOffsetX = 4;
+          shadowOffsetY = 4;
           language = "";
           allowPanelsOnScreenWithoutBar = true;
           showChangelogOnStartup = true;
@@ -134,8 +141,8 @@ in {
           clockFormat = "hh\nmm";
           passwordChars = false;
           lockScreenMonitors = [];
-          lockScreenBlur = 0;
-          lockScreenTint = 0;
+          lockScreenBlur = 0.5;
+          lockScreenTint = 0.25;
           keybinds = {
             keyUp = ["Up"];
             keyDown = ["Down"];
@@ -156,9 +163,9 @@ in {
           fontFixedScale = 1;
           tooltipsEnabled = true;
           scrollbarAlwaysVisible = true;
-          boxBorderEnabled = false;
-          panelBackgroundOpacity = 0.93;
-          translucentWidgets = false;
+          boxBorderEnabled = true;
+          panelBackgroundOpacity = 0.35;
+          translucentWidgets = true;
           panelsAttachedToBar = true;
           settingsPanelMode = "attached";
           settingsPanelSideBarCardStyle = false;
@@ -193,7 +200,7 @@ in {
           {
             enabled = true;
             overviewEnabled = false;
-            directory = "/media/robertocoratti/ssd/immagini/wallpapers/";
+            directory = "";
             monitorDirectories = [];
             enableMultiMonitorDirectories = false;
             showHiddenFiles = false;
@@ -214,19 +221,19 @@ in {
             panelPosition = "follow_bar";
             hideWallpaperFilenames = false;
             useOriginalImages = false;
-            overviewBlur = 0.4;
-            overviewTint = 0.6;
-            useWallhaven = false;
+            overviewBlur = 0.5;
+            overviewTint = 0.4;
+            useWallhaven = true;
             wallhavenQuery = "";
-            wallhavenSorting = "relevance";
+            wallhavenSorting = "toplist";
             wallhavenOrder = "desc";
             wallhavenCategories = "111";
             wallhavenPurity = "100";
             wallhavenRatios = "";
             wallhavenApiKey = "";
             wallhavenResolutionMode = "atleast";
-            wallhavenResolutionWidth = "";
-            wallhavenResolutionHeight = "";
+            wallhavenResolutionWidth = "2560";
+            wallhavenResolutionHeight = "1440";
             sortOrder = "name";
             favorites = [];
           }
@@ -242,7 +249,7 @@ in {
           clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
           clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
           position = "center";
-          pinnedApps = ["firefox" "code" "kitty" "spotify" "obsidian"];
+          pinnedApps = ["brave" "nautilus" "code" "kitty" "spotify" "obsidian"];
           sortByMostUsed = true;
           terminalCommand = "kitty -e";
           customLaunchPrefixEnabled = false;
@@ -321,12 +328,12 @@ in {
           position = "bottom";
           displayMode = "auto_hide";
           dockType = "floating";
-          backgroundOpacity = 1;
+          backgroundOpacity = 0.35;
           floatingRatio = 1;
           size = 1;
           onlySameOutput = true;
           monitors = [];
-          pinnedApps = ["firefox" "code" "kitty" "spotify" "obsidian"];
+          pinnedApps = ["brave" "nautilus" "code" "kitty" "spotify" "obsidian"];
           colorizeIcons = false;
           showLauncherIcon = false;
           launcherPosition = "end";
@@ -343,7 +350,7 @@ in {
           animationSpeed = 1;
           sitOnFrame = false;
           showDockIndicator = false;
-          indicatorThickness = 3;
+          indicatorThickness = 4;
           indicatorColor = "primary";
           indicatorOpacity = 0.6;
         };
@@ -385,11 +392,11 @@ in {
           monitors = [];
           location = "top_right";
           overlayLayer = true;
-          backgroundOpacity = 1;
+          backgroundOpacity = 0.35;
           respectExpireTimeout = false;
           lowUrgencyDuration = 3;
-          normalUrgencyDuration = 8;
-          criticalUrgencyDuration = 15;
+          normalUrgencyDuration = 6;
+          criticalUrgencyDuration = 12;
           clearDismissed = true;
           saveToHistory = {
             low = true;
@@ -403,7 +410,7 @@ in {
             criticalSoundFile = "";
             normalSoundFile = "";
             lowSoundFile = "";
-            excludedApps = "discord,firefox,chrome,chromium,edge";
+            excludedApps = "discord,brave,firefox,chrome,chromium,edge";
           };
           enableMediaToast = false;
           enableKeyboardLayoutToast = true;
@@ -412,16 +419,16 @@ in {
 
         osd = {
           enabled = true;
-          location = "top_right";
+          location = "bottom_center`";
           autoHideMs = 2000;
           overlayLayer = true;
-          backgroundOpacity = 1;
+          backgroundOpacity = 0.35;
           enabledTypes = [0 1 2];
           monitors = [];
         };
 
         audio = {
-          volumeStep = 5;
+          volumeStep = 2;
           volumeOverdrive = false;
           spectrumFrameRate = 30;
           visualizerType = "linear";
@@ -433,7 +440,7 @@ in {
         };
 
         brightness = {
-          brightnessStep = 5;
+          brightnessStep = 2;
           enforceMinimum = true;
           enableDdcSupport = false;
           backlightDeviceMappings = [];
@@ -441,7 +448,7 @@ in {
 
         colorSchemes = {
           useWallpaperColors = false;
-          predefinedScheme = "Noctalia (default)";
+          predefinedScheme = "Nord";
           darkMode = true;
           schedulingMode = "off";
           manualSunrise = "06:30";
@@ -506,6 +513,27 @@ in {
           gridSnapScale = false;
           monitorWidgets = [];
         };
+      };
+
+      plugins = {
+        sources = [
+          {
+            enabled = true;
+            name = "Noctalia Plugins";
+            url = "https://github.com/noctalia-dev/noctalia-plugins";
+          }
+        ];
+        states = {
+          weather-indicator = {
+            enabled = true;
+            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          };
+          screen-toolkit = {
+            enabled = true;
+            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          };
+        };
+        version = 2;
       };
     };
   };

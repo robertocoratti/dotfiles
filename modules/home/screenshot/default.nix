@@ -15,6 +15,12 @@ in {
       grim
       slurp
       grimblast
+      hyprpicker
+      wl-screenrec
+      tesseract
+      imagemagick
+      zbar
+      gifski
     ];
   };
 }
