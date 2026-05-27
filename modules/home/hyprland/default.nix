@@ -195,7 +195,7 @@ in {
             "$mod, O, exec, obsidian"
             # webapps
             "$mod, A, exec, $webapp=\"https:\\\\chatgpt.com\""
-            "$mod, W, exec, karere"
+            "$mod, W, exec, brave --app=https://web.whatsapp.com"
             "$mod, Y, exec, $webapp=\"https:\\\\youtube.com\""
             "$mod, I, exec, $browser --app=http://localhost:8080"
           ]

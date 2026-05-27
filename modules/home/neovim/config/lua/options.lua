@@ -21,3 +21,4 @@ opt.scrolloff = 8
 opt.updatetime = 250
 opt.clipboard = "unnamedplus"
 opt.completeopt = "menu,menuone,noselect"
+opt.shell = "sh"

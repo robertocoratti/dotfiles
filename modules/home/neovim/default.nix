@@ -22,7 +22,6 @@ in {
         ripgrep
         fd
         gcc
-        tree-sitter
       ];
     };
 

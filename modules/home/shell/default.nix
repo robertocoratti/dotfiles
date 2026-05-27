@@ -18,6 +18,15 @@ in {
         set fish_greeting ""
       '';
 
+      functions.nvim = {
+        wraps = "nvim";
+        description = "neovim with terminal cleanup on exit";
+        body = ''
+          command nvim $argv
+          printf '\e[?1049l\e[?25h'
+        '';
+      };
+
       shellAliases = {
         ls = "eza --icons=always --color=always --group-directories-first --git-ignore";
         la = "eza -a --icons=always --color=always --group-directories-first --git-ignore";

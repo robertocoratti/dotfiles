@@ -20,6 +20,7 @@ in {
 
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
+
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -27,6 +28,7 @@ in {
       pulse.enable = true;
       jack.enable = true;
       wireplumber.enable = true;
+
     };
   };
 }
