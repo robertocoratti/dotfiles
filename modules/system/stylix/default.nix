@@ -65,6 +65,7 @@ in {
 
       targets = {
         plymouth.enable = false;
+        qt.enable = true;
       };
     };
 

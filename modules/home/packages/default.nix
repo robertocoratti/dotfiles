@@ -14,21 +14,15 @@ in {
     home.packages = with pkgs; [
       # apps
       brave
-      chromium
+      bitwarden-desktop
       vesktop
       obsidian
       spotify
-      onlyoffice-desktopeditors
+      libreoffice-fresh
       nautilus
 
       # media
       ani-cli
-
-      # study
-      anki
-
-      # pdf
-      zathura
 
       # system
       eza
@@ -39,7 +33,24 @@ in {
       tree
       wl-clipboard
       cliphist
+      comma
+
+      # media
+      imv
     ];
+
+    xdg.desktopEntries.whatsapp = {
+      name = "WhatsApp";
+      genericName = "Messaggistica";
+      exec = "brave --app=https://web.whatsapp.com";
+      icon = builtins.fetchurl {
+        url = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
+        sha256 = "1ji8zfld02an3mxxnjafhxpjx8ah5ygkd1xhiam13jllqfr4ssnx";
+      };
+      categories = ["Network" "InstantMessaging"];
+      terminal = false;
+      startupNotify = false;
+    };
 
     programs = {
       btop.enable = true;

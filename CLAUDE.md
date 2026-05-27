@@ -57,7 +57,7 @@ in {
 
 Each host defines `hosts/<name>/default.nix` exporting raw metadata:
 ```nix
-{ host, user, system, language, timeZone, type }
+{ host, user, fullName, email, system, language, timeZone, type }
 ```
 `user` and `system` are passed through `hostInfo` specialArg for early use (`users.users`, `nixpkgs.hostPlatform`).
 
@@ -80,7 +80,7 @@ Passed to home-manager modules via `extraSpecialArgs`: `inputs`, `hostInfo`.
 
 ### Theming
 
-Stylix (`inputs.stylix`) manages colors, fonts, wallpaper, cursor, and opacity for all supported programs (bat, hyprlock, gtk, kitty, etc.). **Do not set theme-related options that Stylix already controls** — this causes "defined multiple times" errors. Current scheme: `tokyo-night-dark` (base16), dark polarity, Monaspace Nerd Font monospace, Bibata-Modern-Classic cursor.
+Stylix (`inputs.stylix`) manages colors, fonts, wallpaper, cursor, and opacity for all supported programs (bat, hyprlock, gtk, kitty, etc.). **Do not set theme-related options that Stylix already controls** — this causes "defined multiple times" errors. Current scheme: `nord` (base16, with base02 override `5c6e82`), dark polarity, Monaspace Nerd Font monospace, Bibata-Modern-Classic cursor.
 
 The exception is `targets.plymouth.enable = false` in `modules/system/stylix/default.nix` — Plymouth theme is managed manually (`boot.plymouth.theme`).
 

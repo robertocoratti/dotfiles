@@ -7,10 +7,21 @@
   ...
 }: let
   cfg = config.modules.hyprland;
-  waybarEnabled = config.modules.waybar.enable or false;
 in {
   options.modules.hyprland = {
     enable = lib.mkEnableOption "enable hyprland wm";
+    terminal = lib.mkOption {
+      type = lib.types.str;
+      default = "kitty";
+    };
+    browser = lib.mkOption {
+      type = lib.types.str;
+      default = "brave";
+    };
+    fileManager = lib.mkOption {
+      type = lib.types.str;
+      default = "nautilus";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -22,18 +33,16 @@ in {
       settings = {
         "$ipc" = "noctalia-shell ipc call";
         "$mod" = "SUPER";
-        "$terminal" = "kitty";
-        "$fileManager" = "nautilus";
-        "$browser" = "brave";
+        "$terminal" = cfg.terminal;
+        "$browser" = cfg.browser;
+        "$fileManager" = cfg.fileManager;
         "$webapp" = "$browser --app";
 
-        exec-once =
-          [
-            "wl-paste --type text --watch cliphist store"
-            "wl-paste --type image --watch cliphist store"
-            "noctalia-shell"
-          ]
-          ++ lib.optionals waybarEnabled ["waybar"];
+        exec-once = [
+          "wl-paste --type text --watch cliphist store"
+          "wl-paste --type image --watch cliphist store"
+          "noctalia-shell"
+        ];
 
         monitor = [
           "HDMI-A-1, 2560x1440@240, 1920x0, 1.25, bitdepth, 10"
@@ -108,13 +117,28 @@ in {
 
         animations = {
           enabled = true;
-          bezier = "ease-out-circ, 0, 0.55, 0.45, 1";
+
+          bezier = [
+            "ease, 0.25, 0.1, 0.25, 1.0"
+            "spring, 0.43, 0.0, 0.15, 1.0"
+          ];
+
           animation = [
-            "windows, 1, 2, ease-out-circ, popin"
-            "border, 1, 2, ease-out-circ"
-            "borderangle, 1, 2, ease-out-circ"
-            "fade, 1, 3, ease-out-circ"
-            "workspaces, 1, 3, ease-out-circ, slide"
+            "windows, 1, 2, spring, slide"
+            "windowsIn, 1, 2, spring, slide"
+            "windowsOut, 1, 2, ease, slide"
+            "windowsMove, 1, 2, spring"
+            "border, 1, 3, spring"
+            "borderangle, 1, 50, ease, loop"
+            "fade, 1, 2, ease"
+            "fadeIn, 1, 3, ease"
+            "fadeOut, 1, 2, ease"
+            "workspaces, 1, 4, spring, slidefade"
+            "layers, 1, 2, spring, slide"
+            "layersIn, 1, 2, spring, slide"
+            "layersOut, 1, 1, ease, slide"
+            "specialWorkspaceIn, 1, 3, spring, slidevert"
+            "specialWorkspaceOut, 1, 2, ease, slidevert"
           ];
         };
 
@@ -171,9 +195,9 @@ in {
             "$mod, O, exec, obsidian"
             # webapps
             "$mod, A, exec, $webapp=\"https:\\\\chatgpt.com\""
-            "$mod, W, exec, $webapp=\"https:\\\\web.whatsapp.com\""
+            "$mod, W, exec, karere"
             "$mod, Y, exec, $webapp=\"https:\\\\youtube.com\""
-            "$mod, I, exec, brave --app=http://localhost:8080"
+            "$mod, I, exec, $browser --app=http://localhost:8080"
           ]
           ++ (
             builtins.concatLists (

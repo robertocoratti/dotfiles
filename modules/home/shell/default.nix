@@ -69,5 +69,16 @@ in {
     };
 
     programs.bat.enable = true;
+
+    programs.atuin = {
+      enable = true;
+      enableFishIntegration = true;
+      settings = {
+        auto_sync = false;
+        update_check = false;
+        style = "compact";
+        show_help = false;
+      };
+    };
   };
 }

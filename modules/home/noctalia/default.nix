@@ -11,15 +11,17 @@
   stylixWallpaper = osConfig.stylix.image or null;
 
   mkWidget = id: {inherit id;};
-  mkLauncherWidget = id: {inherit id; useDistroLogo = true;};
+  mkLauncherWidget = id: {
+    inherit id;
+    useDistroLogo = true;
+  };
 
-  leftWidgets =
-    [
-      (mkLauncherWidget "Launcher")
-      (mkWidget "Workspace")
-      (mkWidget "ActiveWindow")
-      (mkWidget "MediaMini")
-    ];
+  leftWidgets = [
+    (mkLauncherWidget "Launcher")
+    (mkWidget "Workspace")
+    (mkWidget "ActiveWindow")
+    (mkWidget "MediaMini")
+  ];
   centerWidgets = [
     (mkWidget "Clock")
     (mkWidget "plugin:weather-indicator")
@@ -51,6 +53,14 @@ in {
 
   options.modules.noctalia = {
     enable = lib.mkEnableOption "enable Noctalia Shell";
+    pinnedApps = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = ["brave" "nautilus" "code" "kitty" "spotify" "obsidian"];
+    };
+    terminalCommand = lib.mkOption {
+      type = lib.types.str;
+      default = "kitty -e";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -190,9 +200,18 @@ in {
 
         calendar = {
           cards = [
-            {enabled = true; id = "calendar-header-card";}
-            {enabled = true; id = "calendar-month-card";}
-            {enabled = true; id = "weather-card";}
+            {
+              enabled = true;
+              id = "calendar-header-card";
+            }
+            {
+              enabled = true;
+              id = "calendar-month-card";
+            }
+            {
+              enabled = true;
+              id = "weather-card";
+            }
           ];
         };
 
@@ -249,9 +268,9 @@ in {
           clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
           clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
           position = "center";
-          pinnedApps = ["brave" "nautilus" "code" "kitty" "spotify" "obsidian"];
+          pinnedApps = cfg.pinnedApps;
           sortByMostUsed = true;
-          terminalCommand = "kitty -e";
+          terminalCommand = cfg.terminalCommand;
           customLaunchPrefixEnabled = false;
           customLaunchPrefix = "";
           viewMode = "list";
@@ -285,12 +304,30 @@ in {
             ];
           };
           cards = [
-            {enabled = true; id = "profile-card";}
-            {enabled = true; id = "shortcuts-card";}
-            {enabled = true; id = "audio-card";}
-            {enabled = false; id = "brightness-card";}
-            {enabled = true; id = "weather-card";}
-            {enabled = true; id = "media-sysmon-card";}
+            {
+              enabled = true;
+              id = "profile-card";
+            }
+            {
+              enabled = true;
+              id = "shortcuts-card";
+            }
+            {
+              enabled = true;
+              id = "audio-card";
+            }
+            {
+              enabled = false;
+              id = "brightness-card";
+            }
+            {
+              enabled = true;
+              id = "weather-card";
+            }
+            {
+              enabled = true;
+              id = "media-sysmon-card";
+            }
           ];
         };
 
@@ -333,7 +370,7 @@ in {
           size = 1;
           onlySameOutput = true;
           monitors = [];
-          pinnedApps = ["brave" "nautilus" "code" "kitty" "spotify" "obsidian"];
+          pinnedApps = cfg.pinnedApps;
           colorizeIcons = false;
           showLauncherIcon = false;
           launcherPosition = "end";
@@ -375,13 +412,41 @@ in {
           largeButtonsStyle = true;
           largeButtonsLayout = "single-row";
           powerOptions = [
-            {action = "lock"; enabled = true; keybind = "1";}
-            {action = "suspend"; enabled = true; keybind = "2";}
-            {action = "hibernate"; enabled = true; keybind = "3";}
-            {action = "reboot"; enabled = true; keybind = "4";}
-            {action = "logout"; enabled = true; keybind = "5";}
-            {action = "shutdown"; enabled = true; keybind = "6";}
-            {action = "rebootToUefi"; enabled = true; keybind = "7";}
+            {
+              action = "lock";
+              enabled = true;
+              keybind = "1";
+            }
+            {
+              action = "suspend";
+              enabled = true;
+              keybind = "2";
+            }
+            {
+              action = "hibernate";
+              enabled = true;
+              keybind = "3";
+            }
+            {
+              action = "reboot";
+              enabled = true;
+              keybind = "4";
+            }
+            {
+              action = "logout";
+              enabled = true;
+              keybind = "5";
+            }
+            {
+              action = "shutdown";
+              enabled = true;
+              keybind = "6";
+            }
+            {
+              action = "rebootToUefi";
+              enabled = true;
+              keybind = "7";
+            }
           ];
         };
 

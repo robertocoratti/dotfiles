@@ -6,16 +6,19 @@
   ...
 }: {
   imports = [
+    ./art
     ./claude-code
+    ./development
     ./git
-    ./helix
     ./hyprland
     ./noctalia
     ./icons
     ./kitty
+    ./neovim
     ./packages
     ./screenshot
     ./shell
+    ./ssh
     ./vscode
   ];
 
