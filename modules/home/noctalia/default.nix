@@ -9,6 +9,89 @@
   cfg = config.modules.noctalia;
   isLaptop = osConfig.modules.host.type == "laptop";
   stylixWallpaper = osConfig.stylix.image or null;
+  c = config.lib.stylix.colors;
+
+  mkTerminal = {
+    bg,
+    fg,
+    selBg,
+  }: {
+    normal = {
+      black = "#${bg}";
+      red = "#${c.base08}";
+      green = "#${c.base0B}";
+      yellow = "#${c.base0A}";
+      blue = "#${c.base0D}";
+      magenta = "#${c.base0E}";
+      cyan = "#${c.base0C}";
+      white = "#${c.base05}";
+    };
+    bright = {
+      black = "#${c.base03}";
+      red = "#${c.base08}";
+      green = "#${c.base0B}";
+      yellow = "#${c.base0A}";
+      blue = "#${c.base0D}";
+      magenta = "#${c.base0E}";
+      cyan = "#${c.base0C}";
+      white = "#${c.base07}";
+    };
+    foreground = "#${fg}";
+    background = "#${bg}";
+    selectionFg = "#${fg}";
+    selectionBg = "#${selBg}";
+    cursorText = "#${bg}";
+    cursor = "#${fg}";
+  };
+
+  noctaliaScheme = {
+    dark = {
+      mPrimary = "#${c.base0D}";
+      mOnPrimary = "#${c.base00}";
+      mSecondary = "#${c.base0E}";
+      mOnSecondary = "#${c.base00}";
+      mTertiary = "#${c.base0C}";
+      mOnTertiary = "#${c.base00}";
+      mError = "#${c.base08}";
+      mOnError = "#${c.base00}";
+      mSurface = "#${c.base01}";
+      mOnSurface = "#${c.base05}";
+      mSurfaceVariant = "#${c.base02}";
+      mOnSurfaceVariant = "#${c.base04}";
+      mOutline = "#${c.base03}";
+      mShadow = "#${c.base00}";
+      mHover = "#${c.base0D}";
+      mOnHover = "#${c.base00}";
+      terminal = mkTerminal {
+        bg = c.base00;
+        fg = c.base05;
+        selBg = c.base02;
+      };
+    };
+    light = {
+      mPrimary = "#${c.base0D}";
+      mOnPrimary = "#${c.base07}";
+      mSecondary = "#${c.base0E}";
+      mOnSecondary = "#${c.base07}";
+      mTertiary = "#${c.base0C}";
+      mOnTertiary = "#${c.base07}";
+      mError = "#${c.base08}";
+      mOnError = "#${c.base07}";
+      mSurface = "#${c.base06}";
+      mOnSurface = "#${c.base01}";
+      mSurfaceVariant = "#${c.base05}";
+      mOnSurfaceVariant = "#${c.base03}";
+      mOutline = "#${c.base04}";
+      mShadow = "#${c.base03}";
+      mHover = "#${c.base0D}";
+      mOnHover = "#${c.base07}";
+      terminal = mkTerminal {
+        bg = c.base07;
+        fg = c.base00;
+        selBg = c.base04;
+      };
+    };
+  };
 
   mkWidget = id: {inherit id;};
   mkLauncherWidget = id: {
@@ -227,9 +310,9 @@ in {
             setWallpaperOnAllMonitors = true;
             linkLightAndDarkWallpapers = true;
             fillMode = "crop";
-            fillColor = "#000000";
+            fillColor = "#${config.lib.stylix.colors.base00}";
             useSolidColor = false;
-            solidColor = "#1a1a2e";
+            solidColor = "#${config.lib.stylix.colors.base01}";
             automationEnabled = false;
             wallpaperChangeMode = "random";
             randomIntervalSec = 300;
@@ -513,7 +596,7 @@ in {
 
         colorSchemes = {
           useWallpaperColors = false;
-          predefinedScheme = "Nord";
+          predefinedScheme = "Stylix";
           darkMode = true;
           schedulingMode = "off";
           manualSunrise = "06:30";
@@ -600,6 +683,10 @@ in {
         };
         version = 2;
       };
+    };
+
+    xdg.configFile."noctalia/colorschemes/Stylix/Stylix.json" = {
+      text = builtins.toJSON noctaliaScheme;
     };
   };
 }

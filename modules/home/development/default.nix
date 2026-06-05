@@ -17,9 +17,11 @@ in {
     home.packages = with pkgs;
       [
         lazygit
+        nodejs_24
         pnpm
         httpie
         just
+        devenv
       ]
       ++ (lib.optionals cfg.gameDev.enable (with pkgs; [
         godot_4

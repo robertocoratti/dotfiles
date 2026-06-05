@@ -1,11 +1,2 @@
-return {
-  {
-    "shaunsingh/nord.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.g.nord_italic = false
-      vim.cmd.colorscheme("nord")
-    end,
-  },
-}
+-- colorscheme is applied via mini.base16 with Stylix colors (set in neovim/default.nix)
+return {}
